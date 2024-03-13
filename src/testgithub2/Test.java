@@ -9,5 +9,5 @@ package testgithub2;
  * @author Celsius
  */
 public class Test {
-    
+    public String test_commit;
 }
