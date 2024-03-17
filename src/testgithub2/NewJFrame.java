@@ -8,13 +8,19 @@ package testgithub2;
  *
  * @author Celsius
  */
+
+//  import java.util.Hashtable;
+
 public class NewJFrame extends javax.swing.JFrame {
+    // private Hashtable<Object, Object> constraints;
 
     /**
      * Creates new form NewJFrame
      */
+
     public NewJFrame() {
         initComponents();
+        // constraints = new Hashtable<>();
     }
 
     /**
@@ -24,8 +30,8 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
 
+    private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
