@@ -27,6 +27,7 @@ import java.util.Hashtable;
             // </editor-fold>
         }
     
+        @Override
         public void addLayoutComponent(String string, Component cmpnt) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: new           #5                  // class java/lang/IllegalArgumentException
@@ -37,6 +38,7 @@ import java.util.Hashtable;
             // </editor-fold>
         }
     
+        @Override
         public void removeLayoutComponent(Component cmpnt) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: aload_0
@@ -49,6 +51,7 @@ import java.util.Hashtable;
             // </editor-fold>
         }
     
+        @Override
         public Dimension preferredLayoutSize(Container cntnr) {
             int width = 0;
             int height = 0;
@@ -139,6 +142,7 @@ import java.util.Hashtable;
             return new Dimension(width, height);
         }
     
+        @Override
         public Dimension minimumLayoutSize(Container cntnr) {
             int width = 0;
             int height = 0;
@@ -228,7 +232,8 @@ import java.util.Hashtable;
             // </editor-fold>
             return new Dimension(width, height);
         }
-    
+
+        @Override
         public void layoutContainer(Container cntnr) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: aload_0
@@ -283,6 +288,7 @@ import java.util.Hashtable;
             // </editor-fold>
         }
     
+        @Override
         public void addLayoutComponent(Component cmpnt, Object o) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: aload_2
@@ -303,6 +309,7 @@ import java.util.Hashtable;
             // </editor-fold>
         }
     
+        @Override
         public Dimension maximumLayoutSize(Container cntnr) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: new           #21                 // class java/awt/Dimension
@@ -316,6 +323,7 @@ import java.util.Hashtable;
             return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
         }
     
+        @Override
         public float getLayoutAlignmentX(Container cntnr) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: fconst_0
@@ -325,6 +333,7 @@ import java.util.Hashtable;
             return 0.0f; // Assuming 0.0f is the default alignment X
         }
     
+        @Override
         public float getLayoutAlignmentY(Container cntnr) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: fconst_0
@@ -334,6 +343,7 @@ import java.util.Hashtable;
             return 0.0f; // Assuming 0.0f is the default alignment X
         }
     
+        @Override
         public void invalidateLayout(Container cntnr) {
             // <editor-fold defaultstate="collapsed" desc="Compiled Code">
             /* 0: return
