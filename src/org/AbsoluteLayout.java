@@ -1,4 +1,4 @@
-    package org.netbeans.lib.awtextra;
+    package org;
 
     import java.awt.Component;
     import java.awt.Container;

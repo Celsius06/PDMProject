@@ -1,4 +1,4 @@
-package org.netbeans.lib.awtextra;
+package org;
 
 import java.awt.Dimension;
 import java.awt.Point;
