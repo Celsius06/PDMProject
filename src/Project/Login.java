@@ -6,9 +6,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-
-
-
 public class Login extends javax.swing.JFrame {
     
     public Login() {
