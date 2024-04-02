@@ -2,8 +2,15 @@
   "java.debug.settings.onBuildFailureProceed": true,
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "src/org/AbsoluteLayout-RELEASE210.jar",
     "src/org/mysql-connector-j-8.3.0.jar",
-    "d:\\Codespace\\Library Files (Java)\\flatlaf-3.4.1.jar"
+    "d:\\Codespace\\Library Files (Java)\\flatlaf-3.4.1.jar",
+    "d:\\Codespace\\Library Files (Java)\\AbsoluteLayout-RELEASE210.jar",
+    "d:\\Codespace\\Library Files (Java)\\filters-2.0.235-1.jar",
+    "d:\\Codespace\\Library Files (Java)\\mssql-jdbc-12.6.1.jre8.jar",
+    "d:\\Codespace\\Library Files (Java)\\promises-4.4.0.jar",
+    "d:\\Codespace\\Library Files (Java)\\swing-worker-1.1.jar",
+    "d:\\Codespace\\Library Files (Java)\\swingx-1.6.1.jar",
+    "d:\\Codespace\\Library Files (Java)\\timingframework-core-7.3.1.jar",
+    "d:\\Codespace\\Library Files (Java)\\timingframework-swing-7.3.1.jar"
   ]
 }
