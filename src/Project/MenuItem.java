@@ -19,7 +19,7 @@ public class MenuItem extends javax.swing.JPanel {
             lbName.setText(data.getName());
         } else if (data.getType() == Model_Menu.MenuType.TITLE) {
             lbIcon.setText(data.getName());
-            lbIcon.setFont(new Font("sansserif", 1, 12));
+            lbIcon.setFont(new Font("Arial", 1, 12));
             lbName.setVisible(false);
         } else {
             lbName.setText(" ");
@@ -48,10 +48,11 @@ public class MenuItem extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
