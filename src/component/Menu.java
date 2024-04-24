@@ -1,6 +1,7 @@
 
-package Project;
+package component;
 
+import model.Model_Menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,18 +18,19 @@ public class Menu extends javax.swing.JPanel {
         init();
     }
     private void init(){
-        listMenu1.addItem(new Model_Menu("", "User", Model_Menu.MenuType.TITLE));
         listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("", "Financial Services", Model_Menu.MenuType.TITLE));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("loan", "Loan Application", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("payment", "Payment", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("payment record", "Payment Record", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("support", "Support", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("about", "About", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("info", "About", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));  
     }
     
@@ -38,13 +40,13 @@ public class Menu extends javax.swing.JPanel {
 
         panelMoving = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        listMenu1 = new Project.ListMenu<>();
+        listMenu1 = new swing.ListMenu<>();
 
         panelMoving.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/bank (2).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bank (2).png"))); // NOI18N
         jLabel1.setText("Loan Online System");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
@@ -59,9 +61,9 @@ public class Menu extends javax.swing.JPanel {
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -69,14 +71,17 @@ public class Menu extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(listMenu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(listMenu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
     @Override
@@ -109,7 +114,7 @@ public class Menu extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private Project.ListMenu<String> listMenu1;
+    private swing.ListMenu<String> listMenu1;
     private javax.swing.JPanel panelMoving;
     // End of variables declaration//GEN-END:variables
 }

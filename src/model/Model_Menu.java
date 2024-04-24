@@ -1,4 +1,4 @@
-package Project;
+package model;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -43,7 +43,13 @@ public class Model_Menu {
     private MenuType type;
     
     public Icon toIcon() {
+        if (icon != null && !icon.isEmpty()) {
+            return new ImageIcon(getClass().getResource("/Graphics/"+ icon +".png"));
+        } else {
+        // Handle the case when icon is null or empty
+        // For example, return a default icon or null
         return new ImageIcon(getClass().getResource("/Graphics/home.png"));
+        }
     }
 
     public static enum MenuType {

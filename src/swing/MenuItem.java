@@ -1,6 +1,7 @@
 
-package Project;
+package swing;
 
+import model.Model_Menu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -19,7 +20,7 @@ public class MenuItem extends javax.swing.JPanel {
             lbName.setText(data.getName());
         } else if (data.getType() == Model_Menu.MenuType.TITLE) {
             lbIcon.setText(data.getName());
-            lbIcon.setFont(new Font("Arial", 1, 12));
+            lbIcon.setFont(new Font("Arial", 1, 16));
             lbName.setVisible(false);
         } else {
             lbName.setText(" ");
@@ -38,9 +39,11 @@ public class MenuItem extends javax.swing.JPanel {
         lbIcon = new javax.swing.JLabel();
         lbName = new javax.swing.JLabel();
 
-        lbIcon.setText("jLabel1");
-        lbIcon.setOpaque(true);
+        lbIcon.setForeground(new java.awt.Color(255, 255, 255));
 
+        lbName.setBackground(new java.awt.Color(255, 255, 255));
+        lbName.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setText("Menu Name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -48,17 +51,16 @@ public class MenuItem extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lbIcon)
                 .addGap(18, 18, 18)
-                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(lbName)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -68,7 +70,7 @@ public class MenuItem extends javax.swing.JPanel {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint (RenderingHints. KEY_ANTIALIASING, RenderingHints. VALUE_ANTIALIAS_ON) ;
             g2.setColor(new Color(255,255,255,80));
-            g2.fillRoundRect (0, 0, getWidth (), getHeight(), 5, 5);
+            g2.fillRoundRect (10, 0, getWidth()-20, getHeight(), 5, 5);
         }
         super.paintComponent(g);
     }

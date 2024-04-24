@@ -1,4 +1,4 @@
-package Project;
+package Main;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -27,8 +27,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelBorder1 = new Project.PanelBorder();
-        menu1 = new Project.Menu();
+        panelBorder1 = new swing.PanelBorder();
+        menu1 = new component.Menu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -100,7 +100,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Project.Menu menu1;
-    private Project.PanelBorder panelBorder1;
+    private component.Menu menu1;
+    private swing.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 }

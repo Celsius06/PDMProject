@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="Project.PanelBorder" name="panelBorder1">
+    <Container class="swing.PanelBorder" name="panelBorder1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -60,7 +60,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="Project.Menu" name="menu1">
+        <Component class="component.Menu" name="menu1">
         </Component>
       </SubComponents>
     </Container>
