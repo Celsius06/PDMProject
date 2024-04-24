@@ -1,16 +1,19 @@
 
 package component;
 
+import event.EventMenuSelected;
 import model.Model_Menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 public class Menu extends javax.swing.JPanel {
 
-
+    private EventMenuSelected event;
+    
+    public void addEventMenuSelected(EventMenuSelected event){
+        this.event = event;
+        listMenu1.addEventMenuSelected(event);
+    }
     public Menu() {
         initComponents();
         setOpaque(false);
@@ -47,7 +50,7 @@ public class Menu extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/bank (2).png"))); // NOI18N
-        jLabel1.setText("Loan Online System");
+        jLabel1.setText(" Loan Online System");
 
         javax.swing.GroupLayout panelMovingLayout = new javax.swing.GroupLayout(panelMoving);
         panelMoving.setLayout(panelMovingLayout);
@@ -61,9 +64,9 @@ public class Menu extends javax.swing.JPanel {
         panelMovingLayout.setVerticalGroup(
             panelMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMovingLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
