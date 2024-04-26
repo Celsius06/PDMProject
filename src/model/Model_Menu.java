@@ -34,7 +34,7 @@ public class Model_Menu {
         this.name = name;
         this.type = type;
     }
-
+    
     public Model_Menu() {
     }
 
