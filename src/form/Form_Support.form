@@ -182,9 +182,11 @@
                                   <Component id="CustomerIDBox1" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="LoanAmountBox1" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="DateofLoanBox1" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="DateofLoanBox1" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -593,10 +595,12 @@
                           <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="LoanAmountBox" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="DateofLoanBox" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="LoanIDBox" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="DateofLoanBox" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="LoanIDBox" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                       </Group>
