@@ -1,12 +1,12 @@
 package Main;
 
 import event.EventMenuSelected;
+import form.Form_About;
 import form.Form_Home;
 import form.Form_LoanApplication;
 import form.Form_Payment;
 import form.Form_TransactionRecord;
 import form.Form_Support;
-import form.Form_Test;
 import form.Form_UserInfo;
 import java.awt.*;
 import javax.swing.JComponent;
@@ -40,7 +40,7 @@ public class Main extends javax.swing.JFrame {
                 } else if(index==11){
                     setForm(new Form_Support());
                 } else if(index==12){
-                    setForm(new Form_Test());
+                    setForm(new Form_About());
                 }
             }
         });
