@@ -1,7 +1,7 @@
 package form;
 
-public class Form_Payment extends javax.swing.JPanel {
-    public Form_Payment() {
+public class Form_Pay extends javax.swing.JPanel {
+    public Form_Pay() {
         initComponents();
     }
     

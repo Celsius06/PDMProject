@@ -4,7 +4,7 @@ import event.EventMenuSelected;
 import form.Form_About;
 import form.Form_Home;
 import form.Form_LoanApplication;
-import form.Form_Payment;
+import form.Form_2Card;
 import form.Form_TransactionRecord;
 import form.Form_Support;
 import form.Form_UserInfo;
@@ -33,7 +33,7 @@ public class Main extends javax.swing.JFrame {
                 } else if(index==5){
                     setForm(new Form_LoanApplication());
                 } else if(index==6){
-                    setForm(new Form_Payment());
+                    setForm(new Form_2Card());
                 } else if(index==7){
                     setForm(new Form_TransactionRecord());
                 } else if(index==11){
