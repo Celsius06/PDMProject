@@ -1,50 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+package form;
+
+import Main.Main;
 import form.Form_Deposit;
 import form.Form_Pay;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-/**
- *
- * @author Celsius
- */
 public class Form_2Card extends javax.swing.JPanel {
-
-    /**
-     * Creates new form Form_2Card
-     */
-    public Form_2Card() {
+    Main main;
+    public Form_2Card(Main main) {
+        this.main = main;
         initComponents();
-
-        // Add mouse listeners to the card components
-        payCard.addMouseListener(new PayCardMouseListener());
-        depositCard.addMouseListener(new DepositCardMouseListener());
-    }
-
-    private class PayCardMouseListener extends MouseAdapter {
+        
+        // Add mouse click event listener to card1
+        card1.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
-        public void mouseClicked(MouseEvent e) {
-            // Open the Form_Pay class design
-            Form_Pay payForm = new Form_Pay();
-            payForm.setVisible(true);
-        }
-    }
-    
-    private class DepositCardMouseListener extends MouseAdapter {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card1MouseClicked(evt);
+            }
+        });
+        
+        // Add mouse click event listener to card2
+        card2.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
-        public void mouseClicked(MouseEvent e) {
-            // Open the Form_Deposit class design
-            Form_Deposit depositForm = new Form_Deposit();
-            depositForm.setVisible(true);
-        }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card2MouseClicked(evt);
+            }
+        });
     }
-}
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,76 +36,86 @@ public class Form_2Card extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        payCard = new component.Card();
-        depositCard = new component.Card();
-        userPrompt = new javax.swing.JLabel();
-        depositAction = new javax.swing.JLabel();
-        payAction = new javax.swing.JLabel();
+        card1 = new component.Card();
+        card2 = new component.Card();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
-        payCard.setColor1(new java.awt.Color(51, 102, 255));
-        payCard.setColor2(new java.awt.Color(153, 204, 255));
+        setBackground(new java.awt.Color(102, 204, 255));
+        setPreferredSize(new java.awt.Dimension(798, 511));
 
-        depositCard.setColor1(new java.awt.Color(51, 102, 255));
-        depositCard.setColor2(new java.awt.Color(153, 204, 255));
+        card1.setColor1(new java.awt.Color(51, 102, 255));
+        card1.setColor2(new java.awt.Color(153, 204, 255));
 
-        userPrompt.setFont(new java.awt.Font("Barlow", 0, 24)); // NOI18N
-        userPrompt.setText("Choose Apppropriate Action");
+        card2.setColor1(new java.awt.Color(51, 102, 255));
+        card2.setColor2(new java.awt.Color(153, 204, 255));
 
-        depositAction.setFont(new java.awt.Font("Barlow", 0, 24)); // NOI18N
-        depositAction.setText("Deposit");
+        jLabel1.setFont(new java.awt.Font("Barlow", 1, 36)); // NOI18N
+        jLabel1.setText("Choose Action");
 
-        payAction.setFont(new java.awt.Font("Barlow", 0, 24)); // NOI18N
-        payAction.setText("Pay");
+        jLabel2.setFont(new java.awt.Font("Barlow", 0, 24)); // NOI18N
+        jLabel2.setText("Pay");
+
+        jLabel3.setFont(new java.awt.Font("Barlow", 0, 24)); // NOI18N
+        jLabel3.setText("Deposit");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(162, 162, 162))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(payCard, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(155, 155, 155)
-                                .addComponent(payAction)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(178, 178, 178)
-                                .addComponent(depositAction))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(depositCard, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(25, 25, 25)
+                        .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(userPrompt)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addGap(263, 263, 263)
+                        .addComponent(jLabel1)))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(userPrompt)
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(depositCard, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(payCard, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(depositAction)
-                    .addComponent(payAction))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void card2MouseClicked(java.awt.event.MouseEvent evt) {  
+        Form_Pay payForm = new Form_Pay(main);
+        main.setForm(payForm);
+    } 
+    
+    private void card1MouseClicked(java.awt.event.MouseEvent evt) {                                     
+        Form_Deposit depositForm = new Form_Deposit(main);
+        main.setForm(depositForm);
+    } 
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel depositAction;
-    private component.Card depositCard;
-    private javax.swing.JLabel payAction;
-    private component.Card payCard;
-    private javax.swing.JLabel userPrompt;
+    private component.Card card1;
+    private component.Card card2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
-
+}

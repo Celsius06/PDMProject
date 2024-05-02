@@ -35,7 +35,7 @@
                                   <Component id="FirstNameBox" min="-2" pref="273" max="-2" attributes="0"/>
                                   <Component id="FirstName" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="84" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="LastNameBox" min="-2" pref="273" max="-2" attributes="0"/>
                                   <Component id="LastName" min="-2" pref="77" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
                       <Component id="PaymentForm" min="-2" pref="320" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="207" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

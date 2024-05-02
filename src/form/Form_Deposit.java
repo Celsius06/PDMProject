@@ -1,19 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package form;
 
-/**
- *
- * @author Celsius
- */
-public class Form_Deposit extends javax.swing.JFrame {
+import Main.Main;
 
-    /**
-     * Creates new form Form_Deposit
-     */
-    public Form_Deposit() {
+public class Form_Deposit extends javax.swing.JPanel {
+    Main main;
+    
+    public Form_Deposit(Main main) {
+        this.main = main;
         initComponents();
     }
 
@@ -26,57 +19,219 @@ public class Form_Deposit extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        EmailAddress2 = new javax.swing.JLabel();
+        EmailAddressBox2 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        PaymentForm = new javax.swing.JLabel();
+        Name = new javax.swing.JLabel();
+        FirstNameBox = new javax.swing.JTextField();
+        LastNameBox = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        EmailAddress = new javax.swing.JLabel();
+        EmailAddressBox = new javax.swing.JTextField();
+        EmailAddress1 = new javax.swing.JLabel();
+        EmailAddressBox1 = new javax.swing.JTextField();
+        EmailAddress3 = new javax.swing.JLabel();
+        EmailAddressBox3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        EmailAddress2.setFont(new java.awt.Font("Barlow", 0, 18)); // NOI18N
+        EmailAddress2.setText("Account Number");
+
+        EmailAddressBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailAddressBox2ActionPerformed(evt);
+            }
+        });
+
+        setPreferredSize(new java.awt.Dimension(798, 511));
+
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+
+        PaymentForm.setFont(new java.awt.Font("Barlow", 1, 36)); // NOI18N
+        PaymentForm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PaymentForm.setText("Deposit Form");
+
+        Name.setFont(new java.awt.Font("Barlow", 0, 18)); // NOI18N
+        Name.setText("Name");
+
+        FirstNameBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FirstNameBoxActionPerformed(evt);
+            }
+        });
+
+        LastNameBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LastNameBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Barlow", 0, 14)); // NOI18N
+        jLabel1.setText("First Name");
+
+        jLabel3.setFont(new java.awt.Font("Barlow", 0, 14)); // NOI18N
+        jLabel3.setText("Last Name");
+
+        EmailAddress.setFont(new java.awt.Font("Barlow", 0, 18)); // NOI18N
+        EmailAddress.setText("Email Address");
+
+        EmailAddressBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailAddressBoxActionPerformed(evt);
+            }
+        });
+
+        EmailAddress1.setFont(new java.awt.Font("Barlow", 0, 18)); // NOI18N
+        EmailAddress1.setText("Account Number");
+
+        EmailAddressBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailAddressBox1ActionPerformed(evt);
+            }
+        });
+
+        EmailAddress3.setFont(new java.awt.Font("Barlow", 0, 18)); // NOI18N
+        EmailAddress3.setText("Deposit Amount");
+
+        EmailAddressBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailAddressBox3ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(51, 153, 255));
+        jButton1.setFont(new java.awt.Font("Barlow", 1, 36)); // NOI18N
+        jButton1.setText("Confirm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addComponent(PaymentForm, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(EmailAddressBox, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FirstNameBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(EmailAddress, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(57, 57, 57)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3)
+                                    .addComponent(EmailAddress1)
+                                    .addComponent(LastNameBox, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                    .addComponent(EmailAddressBox1)))
+                            .addComponent(EmailAddress3)
+                            .addComponent(EmailAddressBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(299, 299, 299)
+                        .addComponent(jButton1)))
+                .addContainerGap(138, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PaymentForm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Name)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FirstNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LastNameBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(EmailAddress)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EmailAddressBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(EmailAddress1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EmailAddressBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addComponent(EmailAddress3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(EmailAddressBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(36, 36, 36))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Form_Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Form_Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Form_Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Form_Deposit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void FirstNameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstNameBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FirstNameBoxActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Form_Deposit().setVisible(true);
-            }
-        });
-    }
+    private void LastNameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LastNameBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LastNameBoxActionPerformed
+
+    private void EmailAddressBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailAddressBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailAddressBoxActionPerformed
+
+    private void EmailAddressBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailAddressBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailAddressBox1ActionPerformed
+
+    private void EmailAddressBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailAddressBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailAddressBox2ActionPerformed
+
+    private void EmailAddressBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailAddressBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailAddressBox3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel EmailAddress;
+    private javax.swing.JLabel EmailAddress1;
+    private javax.swing.JLabel EmailAddress2;
+    private javax.swing.JLabel EmailAddress3;
+    private javax.swing.JTextField EmailAddressBox;
+    private javax.swing.JTextField EmailAddressBox1;
+    private javax.swing.JTextField EmailAddressBox2;
+    private javax.swing.JTextField EmailAddressBox3;
+    private javax.swing.JTextField FirstNameBox;
+    private javax.swing.JTextField LastNameBox;
+    private javax.swing.JLabel Name;
+    private javax.swing.JLabel PaymentForm;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

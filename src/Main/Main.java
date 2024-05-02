@@ -13,9 +13,10 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public class Main extends javax.swing.JFrame {
-
+    // Declaration
     public Form_Home home = new Form_Home(this);
     public Form_LoanApplication loanApp = new Form_LoanApplication(this);
+    public Form_2Card card = new Form_2Card(this);
     //In case we want form to be static instead of new (reset when change form)
     // private form1 = new Form_Home();
     // setForm(form1);
@@ -34,7 +35,7 @@ public class Main extends javax.swing.JFrame {
                 } else if(index==5){
                     setForm(loanApp);
                 } else if(index==6){
-                    setForm(new Form_2Card());
+                    setForm(card);
                 } else if(index==7){
                     setForm(new Form_TransactionRecord());
                 } else if(index==11){
