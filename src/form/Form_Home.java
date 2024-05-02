@@ -1,6 +1,7 @@
 
 package form;
 
+import Main.Main;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -10,12 +11,14 @@ import model.StatusType;
 import swing.ScrollBar;
 
 public class Form_Home extends javax.swing.JPanel {
-
-    public Form_Home() {
+    
+    Main main;
+    
+    public Form_Home(Main main) {
+        this.main = main;
         initComponents();
         card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Budget", "-$1", "User ID: 13-4-666"));
         card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", "$107778888999", "Increased by 99.9%"));
-        
         spTable.setVerticalScrollBar(new ScrollBar());
         spTable.getVerticalScrollBar().setBackground(Color.WHITE);
         spTable.getViewport().setBackground(Color.WHITE);
