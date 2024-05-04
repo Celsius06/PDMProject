@@ -4,16 +4,13 @@
  */
 package form;
 
+import Main.Main;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import model.Model_Record;
 import swing.ScrollBar;
 import component.Record;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import model.TransactionType;
 
 /**
@@ -22,10 +19,10 @@ import model.TransactionType;
  */
 public class Form_TransactionRecord extends javax.swing.JPanel {
 
-    /**
-     * Creates new form form_1
-     */
-    public Form_TransactionRecord() {
+    Main main;
+    
+    public Form_TransactionRecord(Main main) {
+        this.main = main;
         initComponents();
         
         
@@ -36,10 +33,10 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
-        addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
-        addRecord("Auto", "$20000", "01/01/2024", "REJECTED", TransactionType.LOAN);
-        addRecord("Deposit", "$20000", "01/01/2024", "SUCCESS", TransactionType.ASSET);
-        addRecord("Repay", "$2000", "01/01/2024", "APPROVED", TransactionType.PAY);
+//        addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
+//        addRecord("Auto", "$20000", "01/01/2024", "REJECTED", TransactionType.LOAN);
+//        addRecord("Deposit", "$20000", "01/01/2024", "SUCCESS", TransactionType.ASSET);
+//        addRecord("Repay", "$2000", "01/01/2024", "APPROVED", TransactionType.PAY);
     }
     public void addRecord(String type, String amount, String date, String status, TransactionType transactionType) {
         Record rc = new Record();

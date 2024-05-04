@@ -6,6 +6,7 @@ package form;
 
 import Main.Main;
 import javax.swing.ImageIcon;
+import model.TransactionType;
 
 /**
  *
@@ -280,6 +281,7 @@ public class Form_Applications extends javax.swing.JPanel {
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
         lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
+        main.trans.addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
     }//GEN-LAST:event_buttonApplyActionPerformed
 
 
