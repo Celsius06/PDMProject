@@ -75,6 +75,14 @@ public class Employee {
     public void setCitizenNum(int citizenNum) {
         this.citizenNum = citizenNum;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
     private int employeeID;
     private String fName;
@@ -83,9 +91,10 @@ public class Employee {
     private String dateOfBrith;
     private GenderType gender; 
     private int phoneNum;
+    private String address;
     private int citizenNum;
 
-    public Employee(int employeeID, String fName, String mName, String lName, String dateOfBrith, GenderType gender, int phoneNum, int citizenNum) {
+    public Employee(int employeeID, String fName, String mName, String lName, String dateOfBrith, GenderType gender, int phoneNum, String address, int citizenNum) {
         this.employeeID = employeeID;
         this.fName = fName;
         this.mName = mName;
@@ -93,6 +102,7 @@ public class Employee {
         this.dateOfBrith = dateOfBrith;
         this.gender = gender;
         this.phoneNum = phoneNum;
+        this.address = address;
         this.citizenNum = citizenNum;
     }
 

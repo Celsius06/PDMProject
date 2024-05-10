@@ -10,15 +10,19 @@ import java.math.BigDecimal;
 import javax.swing.*;
 import java.sql.*;
 import model.AccountType;
+import model.GenderType;
 public class Login extends javax.swing.JFrame {
+    
     
     private ButtonGroup buttonGroup;
     private String username, password, conPassword;
-    private Account user;
+    public Account user;
     private Customer customer = new Customer();
     private Employee employee = new Employee();
     private int id;
-    public Login() {
+    static Main main;
+    public Login(Main main) {
+        this.main = main;
         initComponents();
         init();
         jPanel1.setVisible(false);
@@ -34,6 +38,13 @@ public class Login extends javax.swing.JFrame {
         lbRegNull.setVisible(false);
     }
     
+    public Account getUser(){
+        return user;
+    }
+    
+    public void setUser(Account user){
+        this.user = user;
+    }
     private void init() {
         try {
             DatabaseConnection.getInstance().connectToDatabase();
@@ -486,6 +497,8 @@ public class Login extends javax.swing.JFrame {
                 user = new Account(generateUserID(), username, password, null);
                 if(buttonCustomer.isSelected()){
                     customer.setCustomerID(generateCustomerID());
+                    customer.setDebt(0);
+                    customer.setAsset(0);
                     user.setRole(AccountType.CUSTOMER);
                     PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("insert into account(userID, username, password, role)values(?,?,?,?)");
                     p.setInt(1, id);
@@ -630,16 +643,33 @@ public class Login extends javax.swing.JFrame {
                         AccountType role;
                         if(r.getString("role").equals("CUSTOMER")){
                             role = AccountType.CUSTOMER;
+                            p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT customerID, fName, mName, lName, date_of_birth, gender, phone_number, address, citizen_number, debt, asset FROM customer WHERE userID = ?");
+                            p.setInt(1, id);
+                            r = p.executeQuery();
+                            r.next();
+                            customer = new Customer(r.getInt("customerID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"), r.getDouble("debt"), r.getDouble("asset"));
+                            if(r.getString("gender") != null) {
+                                customer.setGender(GenderType.valueOf(r.getString("gender")));
+                            } else {
+                                customer.setGender(GenderType.NONE);
+                            }
                         } else {
                             role = AccountType.EMPLOYEE;
-                        }
-                        user = new Account(id,username,password,role);
-                        dispose();                     
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                new Main().setVisible(true);
+                            p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT employeeID, fName, mName, lName, date_of_birth, gender, phone_number, address, citizen_number FROM employee WHERE userID = ?");
+                            p.setInt(1, id);
+                            r = p.executeQuery();
+                            r.next();
+                            employee = new Employee(r.getInt("employeeID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"));
+                            if(r.getString("gender") != null){
+                                employee.setGender(GenderType.valueOf(r.getString("gender")));
+                            } else {
+                                employee.setGender(GenderType.NONE);
                             }
-                        });
+                        }
+                        main.setUser(new Account(id,username,password,role));
+                        main.setHeader();
+                        dispose();                     
+                        main.setVisible(true);
                     } else {
                         lbUserNotExist.setVisible(false);
                         lbLoginNull.setVisible(false);
@@ -689,7 +719,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login(main).setVisible(true);
             }
         });
     }

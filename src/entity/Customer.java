@@ -69,10 +69,18 @@ public class Customer {
         this.phoneNum = phoneNum;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
     public int getCitizenNum() {
         return citizenNum;
     }
-
+    
     public void setCitizenNum(int citizenNum) {
         this.citizenNum = citizenNum;
     }
@@ -93,7 +101,7 @@ public class Customer {
         this.asset = asset;
     }
 
-    public Customer(int customerID, String fName, String mName, String lName, String dateOfBrith, GenderType gender, int phoneNum, int citizenNum, double debt, double asset) {
+    public Customer(int customerID, String fName, String mName, String lName, String dateOfBrith, GenderType gender, int phoneNum, String address, int citizenNum, double debt, double asset) {
         this.customerID = customerID;
         this.fName = fName;
         this.mName = mName;
@@ -101,6 +109,7 @@ public class Customer {
         this.dateOfBrith = dateOfBrith;
         this.gender = gender;
         this.phoneNum = phoneNum;
+        this.address = address;
         this.citizenNum = citizenNum;
         this.debt = debt;
         this.asset = asset;
@@ -116,6 +125,7 @@ public class Customer {
     private String dateOfBrith;
     private GenderType gender; 
     private int phoneNum;
+    private String address;
     private int citizenNum;
     private double debt;
     private double asset;

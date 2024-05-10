@@ -33,7 +33,7 @@ public class DatabaseConnection {
         String user = "root";
         String password = "1234567pdmdb";
         Class.forName("com.mysql.cj.jdbc.Driver");
-        connection = java.sql.DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database+"?verifyServerCertificate=true&useSSL=false", user, password);
+        connection = java.sql.DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database + "?allowPublicKeyRetrieval=true&useSSL=false", user, password);
     }
     
     public Connection getConnection() {
