@@ -10,6 +10,7 @@ import form.Form_About;
 import form.Form_Home;
 import form.Form_LoanApplication;
 import form.Form_2Card;
+import form.Form_LoanVerification;
 import form.Form_TransactionRecord;
 import form.Form_Support;
 import form.Form_UserInfo;
@@ -20,11 +21,13 @@ import javax.swing.JPanel;
 import model.AccountType;
 
 public class Main extends javax.swing.JFrame {
+
     // Declaration
     public Form_Home home;
     public Form_LoanApplication loanApp;
     public Form_2Card card;
     public Form_TransactionRecord trans;
+    public Form_LoanVerification verify;
     public Login login;
     public Account user;
     public Customer customer;
@@ -32,55 +35,59 @@ public class Main extends javax.swing.JFrame {
     //In case we want form to be static instead of new (reset when change form)
     // private form1 = new Form_Home();
     // setForm(form1);
-    
+
     public Main() {
         initComponents();
         init();
         login = new Login(this);
         login.setVisible(true);
-        setBackground(new Color(0, 0, 0, 0));        
+        setBackground(new Color(0, 0, 0, 0));
     }
+
     public void switchToSupportForm() {
         setForm(new Form_Support());
     }
-    
-    public void setForm(JComponent com){
+
+    public void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();
         mainPanel.revalidate();
     }
-    
-    public void setDashboard(){
+
+    public void setDashboard() {
         home = new Form_Home(this);
         loanApp = new Form_LoanApplication(this);
         card = new Form_2Card(this);
         trans = new Form_TransactionRecord(this);
+        verify = new Form_LoanVerification(this);
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
-            public void selected(int index){
-                if(index==0){
+            public void selected(int index) {
+                if (index == 0) {
                     setForm(home);
-                } else if(index==1){
+                } else if (index == 1) {
                     setForm(new Form_UserInfo());
-                } else if(index==5){
+                } else if (index == 5) {
                     setForm(loanApp);
-                } else if(index==6){
+                } else if (index == 6) {
                     setForm(card);
-                } else if(index==7){
+                } else if (index == 7) {
                     setForm(trans);
-                } else if(index==11){
+                } else if (index == 11) {
                     setForm(new Form_Support());
-                } else if(index==12){
+                } else if (index == 12) {
                     setForm(new Form_About());
                     System.out.println(user.getUsername());
+                } else if (index == 16) {
+                    setForm(verify);
                 }
             }
         });
         setForm(home);
     }
-    
+
     private void init() {
         try {
             DatabaseConnection.getInstance().connectToDatabase();
@@ -92,27 +99,27 @@ public class Main extends javax.swing.JFrame {
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
-    
-    public void setHeader(){
+
+    public void setHeader() {
         headerBar.setUsername(user.getUsername());
         headerBar.setAccountType(user.getRole());
-        if(user.getRole() == AccountType.CUSTOMER){
+        if (user.getRole() == AccountType.CUSTOMER) {
             headerBar.setIcon("user (1)");
         } else {
             headerBar.setIcon("man");
         }
-        
+
     }
-    
-    public void setUser(Account user){
+
+    public void setUser(Account user) {
         this.user = user;
     }
-    
-    public void setEmployee(Employee employee){
+
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
-    
-    public void setCustomer(Customer customer){
+
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,7 +183,7 @@ public class Main extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
