@@ -512,6 +512,7 @@ public class Login extends javax.swing.JFrame {
                     p.setBigDecimal(3, BigDecimal.ZERO);
                     p.setBigDecimal(4, BigDecimal.ZERO);
                     p.executeUpdate();
+                    main.setCustomer(customer);
                 } else {
                     employee.setEmployeeID(generateEmployeeID());
                     user.setRole(AccountType.EMPLOYEE);
@@ -525,13 +526,12 @@ public class Login extends javax.swing.JFrame {
                     p.setInt(1, generateEmployeeID());
                     p.setInt(2, id);
                     p.executeUpdate();
+                    main.setEmployee(employee);
                 }
-                dispose();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new Main().setVisible(true);
-                    }
-                });
+                main.setUser(user);
+                dispose();                     
+                main.setVisible(true);
+                main.setDashboard();
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -653,6 +653,7 @@ public class Login extends javax.swing.JFrame {
                             } else {
                                 customer.setGender(GenderType.NONE);
                             }
+                            main.setCustomer(customer);
                         } else {
                             role = AccountType.EMPLOYEE;
                             p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT employeeID, fName, mName, lName, date_of_birth, gender, phone_number, address, citizen_number FROM employee WHERE userID = ?");
@@ -665,11 +666,13 @@ public class Login extends javax.swing.JFrame {
                             } else {
                                 employee.setGender(GenderType.NONE);
                             }
+                            main.setEmployee(employee);
                         }
                         main.setUser(new Account(id,username,password,role));
                         main.setHeader();
                         dispose();                     
                         main.setVisible(true);
+                        main.setDashboard();
                     } else {
                         lbUserNotExist.setVisible(false);
                         lbLoginNull.setVisible(false);

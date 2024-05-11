@@ -1,9 +1,10 @@
 package Main;
 
 import Project.Login;
-import component.Header;
 import connection.DatabaseConnection;
 import entity.Account;
+import entity.Customer;
+import entity.Employee;
 import event.EventMenuSelected;
 import form.Form_About;
 import form.Form_Home;
@@ -20,12 +21,14 @@ import model.AccountType;
 
 public class Main extends javax.swing.JFrame {
     // Declaration
-    public Form_Home home = new Form_Home(this);
-    public Form_LoanApplication loanApp = new Form_LoanApplication(this);
-    public Form_2Card card = new Form_2Card(this);
-    public Form_TransactionRecord trans = new Form_TransactionRecord(this);
+    public Form_Home home;
+    public Form_LoanApplication loanApp;
+    public Form_2Card card;
+    public Form_TransactionRecord trans;
     public Login login;
     public Account user;
+    public Customer customer;
+    public Employee employee;
     //In case we want form to be static instead of new (reset when change form)
     // private form1 = new Form_Home();
     // setForm(form1);
@@ -35,7 +38,24 @@ public class Main extends javax.swing.JFrame {
         init();
         login = new Login(this);
         login.setVisible(true);
-        setBackground(new Color(0, 0, 0, 0));
+        setBackground(new Color(0, 0, 0, 0));        
+    }
+    public void switchToSupportForm() {
+        setForm(new Form_Support());
+    }
+    
+    public void setForm(JComponent com){
+        mainPanel.removeAll();
+        mainPanel.add(com);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }
+    
+    public void setDashboard(){
+        home = new Form_Home(this);
+        loanApp = new Form_LoanApplication(this);
+        card = new Form_2Card(this);
+        trans = new Form_TransactionRecord(this);
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -60,17 +80,6 @@ public class Main extends javax.swing.JFrame {
         });
         setForm(home);
     }
-    public void switchToSupportForm() {
-        setForm(new Form_Support());
-    }
-    
-    public void setForm(JComponent com){
-        mainPanel.removeAll();
-        mainPanel.add(com);
-        mainPanel.repaint();
-        mainPanel.revalidate();
-    }
-    
     
     private void init() {
         try {
@@ -97,6 +106,14 @@ public class Main extends javax.swing.JFrame {
     
     public void setUser(Account user){
         this.user = user;
+    }
+    
+    public void setEmployee(Employee employee){
+        this.employee = employee;
+    }
+    
+    public void setCustomer(Customer customer){
+        this.customer = customer;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
