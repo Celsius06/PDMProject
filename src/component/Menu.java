@@ -1,3 +1,4 @@
+
 package component;
 
 import event.EventMenuSelected;
@@ -5,44 +6,37 @@ import model.Model_Menu;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 public class Menu extends javax.swing.JPanel {
 
     private EventMenuSelected event;
-
-    public void addEventMenuSelected(EventMenuSelected event) {
+    
+    public void addEventMenuSelected(EventMenuSelected event){
         this.event = event;
         listMenu1.addEventMenuSelected(event);
     }
-
     public Menu() {
         initComponents();
         setOpaque(false);
         listMenu1.setOpaque(false);
         init();
     }
-
-    private void init() {
+    private void init(){
         listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("", "Financial Services", Model_Menu.MenuType.TITLE));     // title
+        listMenu1.addItem(new Model_Menu("", "Financial Services", Model_Menu.MenuType.TITLE));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("loan", "Loan Application", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("payment", "Payment", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("payment record", "Transaction Records", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));      // title
+        listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("support", "Support", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("info", "About", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        // For Employee
-        listMenu1.addItem(new Model_Menu("", "For Employee", Model_Menu.MenuType.TITLE));       // title
-        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("loan", "Loan Verification", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));  
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -94,34 +88,33 @@ public class Menu extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     @Override
-    protected void paintChildren(Graphics g) {
+    protected void paintChildren(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint gp = new GradientPaint(0, 0, new Color(51, 102, 255), 0, getHeight(), new Color(102, 195, 254));
+        g2.setRenderingHint (RenderingHints. KEY_ANTIALIASING, RenderingHints. VALUE_ANTIALIAS_ON) ;
+        GradientPaint gp = new GradientPaint(0, 0, new Color(51, 102, 255), 0, getHeight (), new Color(102, 195, 254));
         g2.setPaint(gp);
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
-        g2.fillRect(getWidth() - 20, 0, getWidth(), getHeight());
+        g2.fillRoundRect (0, 0, getWidth (), getHeight (), 15, 15);
+        g2.fillRect(getWidth()-20, 0, getWidth(), getHeight());
         super.paintChildren(g);
     }
-
-    private int x, y;
-
-    public void initMoving(JFrame fram) {
-        panelMoving.addMouseListener(new MouseAdapter() {
+        
+    private int x,y;
+    public void initMoving(JFrame fram){
+        panelMoving.addMouseListener(new MouseAdapter(){
             @Override
             public void mousePressed(MouseEvent me) {
-                x = me.getX();
-                y = me.getY();
+               x = me.getX();
+               y = me.getY();
             }
         });
         panelMoving.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseDragged(MouseEvent me) {
+            public void mouseDragged(MouseEvent me){
                 fram.setLocation(me.getXOnScreen() - x, me.getYOnScreen() - y);
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private swing.ListMenu<String> listMenu1;

@@ -1,9 +1,10 @@
 package Main;
 
-<<<<<<< Updated upstream
 import Project.Login;
+<<<<<<< HEAD
+
 =======
->>>>>>> Stashed changes
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
 import component.Header;
 import connection.DatabaseConnection;
 import entity.Account;
@@ -12,7 +13,6 @@ import form.Form_About;
 import form.Form_Home;
 import form.Form_LoanApplication;
 import form.Form_2Card;
-import form.Form_LoanVerification;
 import form.Form_TransactionRecord;
 import form.Form_Support;
 import form.Form_UserInfo;
@@ -23,23 +23,22 @@ import javax.swing.JPanel;
 import model.AccountType;
 
 public class Main extends javax.swing.JFrame {
-
     // Declaration
     public Form_Home home = new Form_Home(this);
     public Form_LoanApplication loanApp = new Form_LoanApplication(this);
     public Form_2Card card = new Form_2Card(this);
     public Form_TransactionRecord trans = new Form_TransactionRecord(this);
-<<<<<<< Updated upstream
     public Login login;
     public Account user;
-    //In case we want form to be static instead of new (reset when change form)
-=======
+<<<<<<< HEAD
     public Form_LoanVerification verify = new Form_LoanVerification(this);
     // In case we want form to be static instead of new (reset when change form)
->>>>>>> Stashed changes
+=======
+    //In case we want form to be static instead of new (reset when change form)
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
     // private form1 = new Form_Home();
     // setForm(form1);
-
+    
     public Main() {
         initComponents();
         init();
@@ -49,43 +48,48 @@ public class Main extends javax.swing.JFrame {
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
-            public void selected(int index) {
-                // System.out.println("Selected index: " + index);
-                if (index == 0) {
+            public void selected(int index){
+                if(index==0){
                     setForm(home);
-                } else if (index == 1) {
+                } else if(index==1){
                     setForm(new Form_UserInfo());
-                } else if (index == 5) {
+                } else if(index==5){
                     setForm(loanApp);
-                } else if (index == 6) {
+                } else if(index==6){
                     setForm(card);
-                } else if (index == 7) {
+                } else if(index==7){
                     setForm(trans);
-                } else if (index == 11) {
+                } else if(index==11){
                     setForm(new Form_Support());
-                } else if (index == 12) {
+                } else if(index==12){
                     setForm(new Form_About());
-<<<<<<< Updated upstream
                     System.out.println(user.getUsername());
-=======
+<<<<<<< HEAD
                 } else if (index == 16) {
                     setForm(verify);
->>>>>>> Stashed changes
+=======
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
                 }
             }
         });
         setForm(home);
     }
-
-    public void setForm(JComponent com) {
+    public void switchToSupportForm() {
+        setForm(new Form_Support());
+    }
+    
+    public void setForm(JComponent com){
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();
         mainPanel.revalidate();
     }
-<<<<<<< Updated upstream
+<<<<<<< HEAD
+
+=======
     
     
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
     private void init() {
         try {
             DatabaseConnection.getInstance().connectToDatabase();
@@ -97,23 +101,23 @@ public class Main extends javax.swing.JFrame {
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
-    
-    public void setHeader(){
+
+    public void setHeader() {
         headerBar.setUsername(user.getUsername());
         headerBar.setAccountType(user.getRole());
-        if(user.getRole() == AccountType.CUSTOMER){
+        if (user.getRole() == AccountType.CUSTOMER) {
             headerBar.setIcon("user (1)");
         } else {
             headerBar.setIcon("man");
         }
-        
+
     }
-    
-    public void setUser(Account user){
+
+    public void setUser(Account user) {
         this.user = user;
     }
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-=======
+<<<<<<< HEAD
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,7 +130,9 @@ public class Main extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
->>>>>>> Stashed changes
+=======
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
     private void initComponents() {
 
         panelBorder1 = new swing.PanelBorder();
@@ -146,7 +152,6 @@ public class Main extends javax.swing.JFrame {
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
-<<<<<<< Updated upstream
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,7 +170,7 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-=======
+<<<<<<< HEAD
                 panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(panelBorder1Layout.createSequentialGroup()
                                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -188,18 +193,19 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap()));
->>>>>>> Stashed changes
+=======
+>>>>>>> parent of 21184cd (Form_LoanVerification 99%)
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -210,13 +216,9 @@ public class Main extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -234,7 +236,7 @@ public class Main extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        // </editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

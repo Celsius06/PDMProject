@@ -10,14 +10,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
-import model.Model_ApprovedCustomer;
 import model.Model_Record;
 import model.TransactionType;
 
+
 public class Record extends javax.swing.JPanel {
-
+    
     private Color colorGradient;
-
+    
     public Color getColorGradient() {
         return colorGradient;
     }
@@ -25,29 +25,29 @@ public class Record extends javax.swing.JPanel {
     public void setColorGradient(Color colorGradient) {
         this.colorGradient = colorGradient;
     }
-
+    
     public Record() {
         initComponents();
         setOpaque(false);
         setBackground(new Color(1, 80, 186));
         colorGradient = new Color(158, 199, 255);
     }
-
-    public void setData(Model_Record data) {
-        if (data.getTrans() == TransactionType.PAY) {
-            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/bank (5).png")));
-        } else if (data.getTrans() == TransactionType.LOAN) {
-            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/loan (2).png")));
-        } else if (data.getTrans() == TransactionType.ASSET) {
-            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/budget (3).png")));
-        }
-        lbAmount.setText(data.getAmount());
-        lbDate.setText(data.getDate());
-        lbNote.setText(data.getNote());
-        lbStatus.setText(data.getStatus());
-        lbTransType.setText(data.getType());
+    
+    public void setData(Model_Record data){
+       if(data.getTrans() == TransactionType.PAY){
+           lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/bank (5).png")));
+       } else if(data.getTrans() == TransactionType.LOAN){
+           lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/loan (2).png")));
+       } else if(data.getTrans() == TransactionType.ASSET){
+           lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/budget (3).png")));
+       }
+       lbAmount.setText(data.getAmount());
+       lbDate.setText(data.getDate());
+       lbNote.setText(data.getNote());
+       lbStatus.setText(data.getStatus());
+       lbTransType.setText(data.getType());
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +122,7 @@ public class Record extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     @Override
     protected void paintComponent(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
