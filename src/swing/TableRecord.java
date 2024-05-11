@@ -9,29 +9,29 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class TableRecord extends JTable {
-    
+
     public TableRecord() {
-        
+
         setShowHorizontalLines(true);
         setRowHeight(175);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1){
+            public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
                 TableHeader header = new TableHeader(o + "");
-                if(i1==4){
+                if (i1 == 4) {
                     header.setHorizontalAlignment(JLabel.CENTER);
-                }    
+                }
                 return header;
             }
         });
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
-                return (Component) o; // Return the component directly        
+                return (Component) o; // Return the component directly
             }
         });
-        
+
         // Initialize the table model
         DefaultTableModel model = new DefaultTableModel() {
             @Override
@@ -40,13 +40,11 @@ public class TableRecord extends JTable {
             }
         };
         setModel(model);
-        
 
     }
-     
-    public void addRow(Record record){
+
+    public void addRow(Record record) {
         DefaultTableModel model = (DefaultTableModel) getModel();
         model.addRow(new Object[]{record});
     }
-    
 }

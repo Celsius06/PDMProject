@@ -20,30 +20,30 @@ import model.TransactionType;
 public class Form_TransactionRecord extends javax.swing.JPanel {
 
     Main main;
-    
+
     public Form_TransactionRecord(Main main) {
         this.main = main;
         initComponents();
-        
-        
+
         spTable.setVerticalScrollBar(new ScrollBar());
         spTable.getVerticalScrollBar().setBackground(Color.WHITE);
         spTable.getViewport().setBackground(Color.WHITE);
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        
+
 //        addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
 //        addRecord("Auto", "$20000", "01/01/2024", "REJECTED", TransactionType.LOAN);
 //        addRecord("Deposit", "$20000", "01/01/2024", "SUCCESS", TransactionType.ASSET);
 //        addRecord("Repay", "$2000", "01/01/2024", "APPROVED", TransactionType.PAY);
     }
+
     public void addRecord(String type, String amount, String date, String status, TransactionType transactionType) {
         Record rc = new Record();
         rc.setData(new Model_Record(type, amount, date, status, "Enjoy!", transactionType));
         table.addRow(rc);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -150,9 +150,6 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
-  
-
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
