@@ -7,6 +7,7 @@ package form;
 import Main.Main;
 import connection.DatabaseConnection;
 import entity.Loan;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -328,10 +329,15 @@ public class Form_Applications extends javax.swing.JPanel {
         try{
             main.trans.addRecord(type.toString(), sliderAmount.getValue(), formattedDate, StatusType.PENDING.toString(), TransactionType.LOAN);
             main.insertLoanData(main.generateLoanID(), sliderAmount.getValue(), StatusType.PENDING, formattedDate, interestRate, sliderMonth.getValue(), monthlyPayment, type);
+//            PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET asset = ?, debt = ? WHERE customerID = ?");
+//            p.setDouble(1, main.customer.getAsset()+sliderAmount.getValue());
+//            p.setDouble(2, main.customer.getAsset()+sliderAmount.getValue());
+//            p.setInt(3, main.customer.getCustomerID());
+//            p.executeUpdate();
+//            p.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
     }//GEN-LAST:event_buttonApplyActionPerformed
 
 

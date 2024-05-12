@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import model.LoanType;
 import model.Model_Card;
 import model.StatusType;
 import swing.ScrollBar;
@@ -22,22 +23,25 @@ public class Form_Home extends javax.swing.JPanel {
         user = main.user;
         customer = main.customer;
         initComponents();
-        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Budget", ""+customer.getAsset(), "User ID: "+user.getUserID()));
-        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", "$107778888999", "Increased by 99.9%"));
+        
         spTable.setVerticalScrollBar(new ScrollBar());
         spTable.getVerticalScrollBar().setBackground(Color.WHITE);
         spTable.getViewport().setBackground(Color.WHITE);
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        
-        table.addRow(new Object[]{"000001", "Vehicle", "01/01/2024", "$9999", StatusType.PENDING});
-        table.addRow(new Object[]{"000002", "Education", "01/01/2024", "$9999", StatusType.REJECTED});
-        table.addRow(new Object[]{"000003", "Personal", "01/01/2024", "$9999", StatusType.PENDING});
-        table.addRow(new Object[]{"000004", "Home", "01/01/2024", "$9999", StatusType.PENDING});
-        table.addRow(new Object[]{"000005", "Human", "01/01/2024", "$9999", StatusType.APPROVED});
     }
-
+    
+    public void addStatus(int id, String type, String date, int amount, StatusType status){
+        table.addRow(new Object[]{id, type, date, amount, status});    
+    }
+    public void removeAllRow(){
+        table.removeAllRows();
+    }
+    public void setCardData(double asset, double debt, int id, double monthlyPayment){
+        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Asset", ""+String.format("%.2f",asset), "User ID: "+id));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", ""+String.format("%.2f",debt), "Total monthly payment: "+String.format("%.2f",monthlyPayment)));
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

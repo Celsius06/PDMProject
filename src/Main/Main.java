@@ -60,7 +60,7 @@ public class Main extends javax.swing.JFrame {
         mainPanel.revalidate();
     }
 
-    public void setDashboard() {
+    public void setDashboard() throws SQLException, ClassNotFoundException {
         home = new Form_Home(this);
         loanApp = new Form_LoanApplication(this);
         card = new Form_2Card(this);
@@ -70,32 +70,34 @@ public class Main extends javax.swing.JFrame {
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index){
-                if (index == 0) {
-                    setForm(home);
-                } else if (index == 1) {
-                    setForm(new Form_UserInfo());
-                } else if (index == 5) {
-                    setForm(loanApp);
-                } else if (index == 6) {
-                    setForm(card);
-                } else if (index == 7) {
-                    setForm(trans);
-                    try {
+                try {
+                    if (index == 0) {
+                        setForm(home);
+                        setHome();
+                    } else if (index == 1) {
+                        setForm(new Form_UserInfo());
+                    } else if (index == 5) {
+                        setForm(loanApp);
+                    } else if (index == 6) {
+                        setForm(card);
+                    } else if (index == 7) {
+                        setForm(trans);
                         setTransactionRecord();
-                    } catch (ClassNotFoundException | SQLException e) {
+                    } else if (index == 11) {
+                        setForm(new Form_Support());
+                    } else if (index == 12) {
+                        setForm(new Form_About());
+                        System.out.println(user.getUsername());
+                    } else if (index == 16) {
+                        setForm(verify);
+                    }
+                } catch (ClassNotFoundException | SQLException e) {
                         e.printStackTrace();
-                    } 
-                } else if (index == 11) {
-                    setForm(new Form_Support());
-                } else if (index == 12) {
-                    setForm(new Form_About());
-                    System.out.println(user.getUsername());
-                } else if (index == 16) {
-                    setForm(verify);
-                }
+                } 
             }
         });
         setForm(home);
+        setHome();
     }
 
     private void initConnection() {
@@ -168,6 +170,20 @@ public class Main extends javax.swing.JFrame {
             trans.addRecord(r.getString("loanType"), r.getInt("loanAmount"), r.getString("loanDate"), r.getString("loanStatus"), TransactionType.LOAN);
         }
     } 
+    
+    public void setHome()throws SQLException, ClassNotFoundException{
+        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment FROM loan WHERE customerID = ? ORDER BY loanDate");
+        p.setInt(1, customer.getCustomerID());
+//addStatus(int id, String type, String date, int amount, String status)        
+        ResultSet r = p.executeQuery();
+        home.removeAllRow();
+        double totalMonthlyPayment = 0;
+        while(r.next()){
+            home.addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus")));
+            totalMonthlyPayment += r.getDouble("monthlyPayment");
+        }
+        home.setCardData(customer.getAsset(), customer.getDebt(), user.getUserID(), totalMonthlyPayment);
+    }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
