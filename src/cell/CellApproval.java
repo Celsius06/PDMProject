@@ -33,7 +33,7 @@ public class CellApproval extends TableCustomCell {
                     int amount = customerData.getAmount();
                     int months = customerData.getMonths();
                     LoanType loanType = customerData.getLoanType();
-
+                    System.out.println("if worked");
                     table2.addApprovedCustomer(name, loanID, amount, months, loanType);
                     table2.repaint();
                 }

@@ -24,7 +24,7 @@ public class Login extends javax.swing.JFrame {
     public Login(Main main) {
         this.main = main;
         initComponents();
-        init();
+        initConnection();
         jPanel1.setVisible(false);
         buttonGroup = new ButtonGroup();
         buttonGroup.add(buttonEmployee);
@@ -45,7 +45,7 @@ public class Login extends javax.swing.JFrame {
     public void setUser(Account user){
         this.user = user;
     }
-    private void init() {
+    private void initConnection() {
         try {
             DatabaseConnection.getInstance().connectToDatabase();
         } catch (ClassNotFoundException | SQLException e) {

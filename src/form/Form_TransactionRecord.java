@@ -38,10 +38,13 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
 //        addRecord("Deposit", "$20000", "01/01/2024", "SUCCESS", TransactionType.ASSET);
 //        addRecord("Repay", "$2000", "01/01/2024", "APPROVED", TransactionType.PAY);
     }
-    public void addRecord(String type, String amount, String date, String status, TransactionType transactionType) {
+    public void addRecord(String type, int amount, String date, String status, TransactionType transactionType) {
         Record rc = new Record();
-        rc.setData(new Model_Record(type, amount, date, status, "Enjoy!", transactionType));
+        rc.setData(new Model_Record(type, amount, date, status, transactionType));
         table.addRow(rc);
+    }
+    public void removeAllRow(){
+        table.removeAllRows();
     }
     
     @SuppressWarnings("unchecked")
@@ -150,10 +153,9 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
-  
-
  
-
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;

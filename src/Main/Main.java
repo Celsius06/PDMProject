@@ -15,10 +15,15 @@ import form.Form_TransactionRecord;
 import form.Form_Support;
 import form.Form_UserInfo;
 import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import model.AccountType;
+import model.LoanType;
+import model.StatusType;
+import model.TransactionType;
 
 public class Main extends javax.swing.JFrame {
 
@@ -38,7 +43,7 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
-        init();
+        initConnection();
         login = new Login(this);
         login.setVisible(true);
         setBackground(new Color(0, 0, 0, 0));
@@ -64,7 +69,7 @@ public class Main extends javax.swing.JFrame {
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
-            public void selected(int index) {
+            public void selected(int index){
                 if (index == 0) {
                     setForm(home);
                 } else if (index == 1) {
@@ -75,6 +80,11 @@ public class Main extends javax.swing.JFrame {
                     setForm(card);
                 } else if (index == 7) {
                     setForm(trans);
+                    try {
+                        setTransactionRecord();
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    } 
                 } else if (index == 11) {
                     setForm(new Form_Support());
                 } else if (index == 12) {
@@ -88,7 +98,7 @@ public class Main extends javax.swing.JFrame {
         setForm(home);
     }
 
-    private void init() {
+    private void initConnection() {
         try {
             DatabaseConnection.getInstance().connectToDatabase();
         } catch (ClassNotFoundException | SQLException e) {
@@ -122,6 +132,42 @@ public class Main extends javax.swing.JFrame {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+    
+    public void insertLoanData(int id, int amount, StatusType status, String date, double interest, int term, double monthlyPayment, LoanType type) throws SQLException, ClassNotFoundException{
+        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("insert into loan(loanID, loanAmount, loanStatus, loanDate, interestRate, loanTerm, monthlyPayment, loanType, customerID)values(?,?,?,?,?,?,?,?,?)");
+        p.setInt(1, id);
+        p.setInt(2, amount);
+        p.setString(3, status.toString());
+        p.setString(4, date);
+        p.setDouble(5, interest);
+        p.setInt(6, term);
+        p.setDouble(7, monthlyPayment);
+        p.setString(8, type.toString());
+        p.setInt(9, customer.getCustomerID());
+        p.executeUpdate();
+    }
+    
+    public int generateLoanID() throws SQLException, ClassNotFoundException {     
+        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan ORDER BY loanID DESC LIMIT 1");
+        ResultSet r = p.executeQuery(); 
+        if (r.next()) {
+            int selectedId = r.getInt(1);
+            selectedId++;
+            return selectedId;
+        }
+        return 1;
+    }
+    
+    public void setTransactionRecord() throws SQLException, ClassNotFoundException{
+        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType FROM loan WHERE customerID = ? ORDER BY loanDate");
+// addRecord(String type, String amount, String date, String status, TransactionType transactionType)
+        p.setInt(1, customer.getCustomerID());
+        ResultSet r = p.executeQuery();
+        trans.removeAllRow();
+        while(r.next()){
+            trans.addRecord(r.getString("loanType"), r.getInt("loanAmount"), r.getString("loanDate"), r.getString("loanStatus"), TransactionType.LOAN);
+        }
+    } 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

@@ -5,7 +5,14 @@
 package form;
 
 import Main.Main;
+import connection.DatabaseConnection;
+import entity.Loan;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
+import model.LoanType;
+import model.StatusType;
 import model.TransactionType;
 
 /**
@@ -15,41 +22,53 @@ import model.TransactionType;
 public class Form_Applications extends javax.swing.JPanel {
 
     Main main;
-    private String type;
+    private LoanType type;
     private double interestRate;
-    public Form_Applications(Main main, String type) {
+    private double monthlyPayment;
+    private Loan loan;
+    private LocalDate currentDate = LocalDate.now();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+    private String formattedDate = currentDate.format(formatter);
+    public Form_Applications(Main main, LoanType type) {
+        initConnection();
         this.main = main;
         this.type = type;
         initComponents();
-        if(type == "Personal"){
+        if(type == LoanType.PERSONAL){
+            lbType.setText(type.toString()+" LOAN");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/personal.png")));
-            lbType.setText("PERSONAL LOAN");
             lbInterestRate.setText("8%");
-            interestRate = 8;
-        } else if (type == "Auto"){
+            interestRate = 0.08;
+        } else if (type == LoanType.AUTO){
+            lbType.setText(type.toString()+" LOAN");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/car-loan.png")));
-            lbType.setText("AUTO LOAN");
             lbInterestRate.setText("4.5%");
-            interestRate = 4.5;
-        } else if (type == "Business"){
+            interestRate = 0.045;
+        } else if (type == LoanType.BUSINESS){
+            lbType.setText(type.toString()+" LOAN");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/deal.png")));
-            lbType.setText("BUSINESS LOAN");
             lbInterestRate.setText("6%");
-            interestRate = 6;
-        } else if (type == "Installment"){
+            interestRate = 0.06;
+        } else if (type == LoanType.INSTALLMENT){
+            lbType.setText(type.toString()+" LOAN");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/credit.png")));
-            lbType.setText("INSTALLMENT LOAN");
             lbInterestRate.setText("10%");
-            interestRate = 10;
-        } else if (type == "Payday"){
+            interestRate = 0.1;
+        } else if (type == LoanType.PAYDAY){
+            lbType.setText(type.toString()+" LOAN");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/clock.png")));
-            lbType.setText("PAYDAY LOAN");
             lbInterestRate.setText("20%");
-            interestRate = 20;
+            interestRate = 0.2;
         }
     }
     
-   
+    private void initConnection() {
+        try {
+            DatabaseConnection.getInstance().connectToDatabase();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,9 +78,9 @@ public class Form_Applications extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         lbIcon = new javax.swing.JLabel();
         lbAmount = new javax.swing.JLabel();
-        sliderGradient1 = new swing.SliderGradient();
+        sliderAmount = new swing.SliderGradient();
         jLabel5 = new javax.swing.JLabel();
-        sliderGradient2 = new swing.SliderGradient();
+        sliderMonth = new swing.SliderGradient();
         lbMonth = new javax.swing.JLabel();
         textMonth = new javax.swing.JTextField();
         textAmount = new javax.swing.JTextField();
@@ -71,6 +90,8 @@ public class Form_Applications extends javax.swing.JPanel {
         lbInterestPaid = new javax.swing.JLabel();
         lbStatus = new javax.swing.JLabel();
         buttonApply = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbMonthlyPayment = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -88,15 +109,15 @@ public class Form_Applications extends javax.swing.JPanel {
         lbAmount.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lbAmount.setForeground(new java.awt.Color(255, 255, 255));
 
-        sliderGradient1.setForeground(new java.awt.Color(255, 255, 255));
-        sliderGradient1.setMajorTickSpacing(1000);
-        sliderGradient1.setMaximum(10000);
-        sliderGradient1.setMinimum(1000);
-        sliderGradient1.setPaintLabels(true);
-        sliderGradient1.setOpaque(false);
-        sliderGradient1.addChangeListener(new javax.swing.event.ChangeListener() {
+        sliderAmount.setForeground(new java.awt.Color(255, 255, 255));
+        sliderAmount.setMajorTickSpacing(1000);
+        sliderAmount.setMaximum(10000);
+        sliderAmount.setMinimum(1000);
+        sliderAmount.setPaintLabels(true);
+        sliderAmount.setOpaque(false);
+        sliderAmount.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sliderGradient1StateChanged(evt);
+                sliderAmountStateChanged(evt);
             }
         });
 
@@ -104,16 +125,16 @@ public class Form_Applications extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Month:");
 
-        sliderGradient2.setForeground(new java.awt.Color(255, 255, 255));
-        sliderGradient2.setMajorTickSpacing(2);
-        sliderGradient2.setMaximum(36);
-        sliderGradient2.setMinimum(6);
-        sliderGradient2.setPaintLabels(true);
-        sliderGradient2.setValue(6);
-        sliderGradient2.setOpaque(false);
-        sliderGradient2.addChangeListener(new javax.swing.event.ChangeListener() {
+        sliderMonth.setForeground(new java.awt.Color(255, 255, 255));
+        sliderMonth.setMajorTickSpacing(2);
+        sliderMonth.setMaximum(36);
+        sliderMonth.setMinimum(6);
+        sliderMonth.setPaintLabels(true);
+        sliderMonth.setValue(6);
+        sliderMonth.setOpaque(false);
+        sliderMonth.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sliderGradient2StateChanged(evt);
+                sliderMonthStateChanged(evt);
             }
         });
 
@@ -155,6 +176,13 @@ public class Form_Applications extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Monthly Payment:");
+
+        lbMonthlyPayment.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        lbMonthlyPayment.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout panelBorderGradient1Layout = new javax.swing.GroupLayout(panelBorderGradient1);
         panelBorderGradient1.setLayout(panelBorderGradient1Layout);
         panelBorderGradient1Layout.setHorizontalGroup(
@@ -174,9 +202,13 @@ public class Form_Applications extends javax.swing.JPanel {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(lbInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(40, 40, 40)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lbInterestPaid, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbInterestPaid, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lbMonthlyPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(lbType, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(59, 59, 59)
                             .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -195,41 +227,49 @@ public class Form_Applications extends javax.swing.JPanel {
                                         .addComponent(lbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 393, Short.MAX_VALUE)
                                         .addComponent(textMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(sliderGradient1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(sliderGradient2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(sliderAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(sliderMonth, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         panelBorderGradient1Layout.setVerticalGroup(
             panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorderGradient1Layout.createSequentialGroup()
-                .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(lbType, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                            .addComponent(lbInterestRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbInterestPaid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorderGradient1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lbType)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelBorderGradient1Layout.createSequentialGroup()
+                                .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                    .addComponent(lbInterestPaid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbMonthlyPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorderGradient1Layout.createSequentialGroup()
+                                .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lbInterestRate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                                .addGap(35, 35, 35))))
+                    .addGroup(panelBorderGradient1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(textAmount, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sliderGradient1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sliderAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sliderGradient2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(sliderMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -238,7 +278,7 @@ public class Form_Applications extends javax.swing.JPanel {
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(buttonApply, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(49, Short.MAX_VALUE))))
+                        .addContainerGap(56, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -259,29 +299,39 @@ public class Form_Applications extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void sliderGradient1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderGradient1StateChanged
-        lbAmount.setText(sliderGradient1.getValue()+" $");
-        lbInterestPaid.setText(sliderGradient1.getValue()*sliderGradient2.getValue()*interestRate/100+"");
-    }//GEN-LAST:event_sliderGradient1StateChanged
+    private void sliderAmountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderAmountStateChanged
+        lbAmount.setText(sliderAmount.getValue()+" $");
+        monthlyPayment = (sliderAmount.getValue()*(interestRate/12.0)*Math.pow((1+(interestRate/12.0)),sliderMonth.getValue()))/(Math.pow((1+(interestRate/12.0)),sliderMonth.getValue())-1);
+        lbInterestPaid.setText(String.format("%.2f",monthlyPayment*sliderMonth.getValue()-sliderAmount.getValue())+" $");
+        lbMonthlyPayment.setText(String.format("%.2f",monthlyPayment)+" $");
+    }//GEN-LAST:event_sliderAmountStateChanged
 
-    private void sliderGradient2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderGradient2StateChanged
-        lbMonth.setText(sliderGradient2.getValue()+"");
-        lbInterestPaid.setText(sliderGradient1.getValue()*sliderGradient2.getValue()*interestRate/100+"");
-    }//GEN-LAST:event_sliderGradient2StateChanged
+    private void sliderMonthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderMonthStateChanged
+        lbMonth.setText(sliderMonth.getValue()+"");
+        monthlyPayment = (sliderAmount.getValue()*(interestRate/12.0)*Math.pow((1+(interestRate/12.0)),sliderMonth.getValue()))/(Math.pow((1+(interestRate/12.0)),sliderMonth.getValue())-1);
+        lbInterestPaid.setText(String.format("%.2f",monthlyPayment*sliderMonth.getValue()-sliderAmount.getValue())+" $");
+        lbMonthlyPayment.setText(String.format("%.2f",monthlyPayment)+" $");
+    }//GEN-LAST:event_sliderMonthStateChanged
 
     private void textAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textAmountActionPerformed
         int value1 = Integer.parseInt(textAmount.getText());
-        sliderGradient1.setValue(value1);
+        sliderAmount.setValue(value1);
     }//GEN-LAST:event_textAmountActionPerformed
 
     private void textMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMonthActionPerformed
         int value2 = Integer.parseInt(textMonth.getText());
-        sliderGradient2.setValue(value2);
+        sliderMonth.setValue(value2);
     }//GEN-LAST:event_textMonthActionPerformed
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
         lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
-        main.trans.addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
+        try{
+            main.trans.addRecord(type.toString(), sliderAmount.getValue(), formattedDate, StatusType.PENDING.toString(), TransactionType.LOAN);
+            main.insertLoanData(main.generateLoanID(), sliderAmount.getValue(), StatusType.PENDING, formattedDate, interestRate, sliderMonth.getValue(), monthlyPayment, type);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_buttonApplyActionPerformed
 
 
@@ -289,6 +339,7 @@ public class Form_Applications extends javax.swing.JPanel {
     private javax.swing.JButton buttonApply;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel lbAmount;
@@ -296,11 +347,12 @@ public class Form_Applications extends javax.swing.JPanel {
     private javax.swing.JLabel lbInterestPaid;
     private javax.swing.JLabel lbInterestRate;
     private javax.swing.JLabel lbMonth;
+    private javax.swing.JLabel lbMonthlyPayment;
     private javax.swing.JLabel lbStatus;
     private javax.swing.JLabel lbType;
     private swing.PanelBorderGradient panelBorderGradient1;
-    private swing.SliderGradient sliderGradient1;
-    private swing.SliderGradient sliderGradient2;
+    private swing.SliderGradient sliderAmount;
+    private swing.SliderGradient sliderMonth;
     private javax.swing.JTextField textAmount;
     private javax.swing.JTextField textMonth;
     // End of variables declaration//GEN-END:variables

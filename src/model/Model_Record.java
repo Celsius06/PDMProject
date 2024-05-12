@@ -8,8 +8,7 @@ public class Model_Record {
     private String type;
     private String date;
     private String status;
-    private String note;
-    private String amount;
+    private int amount;
     private TransactionType trans;
     
     public String getType() {
@@ -36,19 +35,11 @@ public class Model_Record {
         this.status = status;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -63,11 +54,10 @@ public class Model_Record {
     public Model_Record() {
     }
 
-    public Model_Record(String type, String amount, String date, String status, String note, TransactionType trans) {
+    public Model_Record(String type, int amount, String date, String status, TransactionType trans) {
         this.type = type;
         this.date = date;
         this.status = status;
-        this.note = note;
         this.amount = amount;
         this.trans = trans;
     }       

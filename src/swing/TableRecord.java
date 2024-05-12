@@ -13,7 +13,7 @@ public class TableRecord extends JTable {
     public TableRecord() {
         
         setShowHorizontalLines(true);
-        setRowHeight(175);
+        setRowHeight(142);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -49,4 +49,8 @@ public class TableRecord extends JTable {
         model.addRow(new Object[]{record});
     }
     
+    public void removeAllRows() {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+        model.setRowCount(0);
+    }
 }

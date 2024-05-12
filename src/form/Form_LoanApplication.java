@@ -7,15 +7,15 @@ import model.Model_Option;
 
 public class Form_LoanApplication extends javax.swing.JPanel {
     Main main;
-    private LoanType loan;
+    private LoanType type;
     public Form_LoanApplication(Main main) {
         this.main = main;
         initComponents();
-        option1.setData(new Model_Option("Personal",loan.PERSONAL));
-        option2.setData(new Model_Option("Auto",loan.AUTO));
-        option3.setData(new Model_Option("Business",loan.BUSINESS));
-        option4.setData(new Model_Option("Installment",loan.INSTALLMENT));
-        option5.setData(new Model_Option("Payday",loan.PAYDAY));
+        option1.setData(new Model_Option("Personal",type.PERSONAL));
+        option2.setData(new Model_Option("Auto",type.AUTO));
+        option3.setData(new Model_Option("Business",type.BUSINESS));
+        option4.setData(new Model_Option("Installment",type.INSTALLMENT));
+        option5.setData(new Model_Option("Payday",type.PAYDAY));
     }
 
     @SuppressWarnings("unchecked")
@@ -126,23 +126,23 @@ public class Form_LoanApplication extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void option1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_option1MouseClicked
-        main.setForm(new Form_Applications(main,"Personal"));
+        main.setForm(new Form_Applications(main,type.PERSONAL));
     }//GEN-LAST:event_option1MouseClicked
 
     private void option2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_option2MouseClicked
-        main.setForm(new Form_Applications(main,"Auto"));
+        main.setForm(new Form_Applications(main,type.AUTO));
     }//GEN-LAST:event_option2MouseClicked
 
     private void option3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_option3MouseClicked
-        main.setForm(new Form_Applications(main,"Business"));
+        main.setForm(new Form_Applications(main,type.BUSINESS));
     }//GEN-LAST:event_option3MouseClicked
 
     private void option4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_option4MouseClicked
-        main.setForm(new Form_Applications(main,"Installment"));
+        main.setForm(new Form_Applications(main,type.INSTALLMENT));
     }//GEN-LAST:event_option4MouseClicked
 
     private void option5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_option5MouseClicked
-        main.setForm(new Form_Applications(main,"Payday"));
+        main.setForm(new Form_Applications(main,type.PAYDAY));
     }//GEN-LAST:event_option5MouseClicked
     
 

@@ -27,7 +27,8 @@ public class Form_LoanVerification extends javax.swing.JPanel {
 
     Main main;
     private CellApproval cmdApproval;
-
+    ModelStaff mstest;
+    ModelName mntest;
     public Form_LoanVerification(Main main) {
         this.main = main;
         initComponents();
@@ -46,9 +47,9 @@ public class Form_LoanVerification extends javax.swing.JPanel {
         table1.addTableCell(new CellAction(), 5);
         table1.addTableCell(new CellApproval(this), 6);
 
-        table1.addRow(new ModelStaff(new ModelName("Thien", "An", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 20000, "12", "Personal Loans"), false);
-        table1.addRow(new ModelStaff(new ModelName("John", "Cena", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 30000, "12", "Personal Loans"), false);
-        table1.addRow(new ModelStaff(new ModelName("Minh", "Thuan", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 40000, "12", "Personal Loans"), false);
+        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("Thien", "An", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 20000, "12", "Personal Loans"), false);
+        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("John", "Cena", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 30000, "12", "Personal Loans"), false);
+        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("Minh", "Thuan", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 40000, "12", "Personal Loans"), false);
     }
 
     public void addApprovedCustomer(Model_Name name, int loanID, int amount, int months, LoanType loanType) {
