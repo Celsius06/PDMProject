@@ -16,13 +16,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="cmdViewClosed" min="-2" pref="26" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdDelete" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdApproval" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="txt" max="32767" attributes="0"/>
+                  <Component id="jLabel1" pref="206" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -30,35 +29,21 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <Component id="jLabel1" min="-2" pref="27" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdViewClosed" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="txt" min="-2" pref="67" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
-          <Component id="cmdDelete" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
-          <Component id="cmdApproval" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="Employee.swing.Button" name="cmdViewClosed">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Graphics/action/viewclosed_18px.png"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Issue Description"/>
       </Properties>
     </Component>
-    <Component class="Employee.swing.Button" name="cmdDelete">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Employee/icon/cancel.png"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="swing.Button" name="cmdApproval">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Employee/icon/approve_18px.png"/>
-        </Property>
-      </Properties>
+    <Component class="javax.swing.JTextField" name="txt">
     </Component>
   </SubComponents>
 </Form>

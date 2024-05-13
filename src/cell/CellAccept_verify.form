@@ -17,43 +17,24 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="cmdViewClosed" min="-2" pref="26" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdDelete" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdApproval" min="-2" max="-2" attributes="0"/>
+              <Component id="cmdAccept" pref="66" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdViewClosed" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="cmdAccept" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
-          <Component id="cmdDelete" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
-          <Component id="cmdApproval" alignment="1" min="-2" pref="42" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="Employee.swing.Button" name="cmdViewClosed">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Graphics/action/viewclosed_18px.png"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="Employee.swing.Button" name="cmdDelete">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Employee/icon/cancel.png"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="swing.Button" name="cmdApproval">
+    <Component class="Employee.swing.Button" name="cmdAccept">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Employee/icon/approve_18px.png"/>

@@ -4,9 +4,9 @@ import com.raven.table.TableCustom;
 import com.raven.table.cell.TableCustomCell;
 import com.raven.table.model.TableRowData;
 
-public class CellAmount extends TableCustomCell {
+public class CellDate extends TableCustomCell {
 
-    public CellAmount() {
+    public CellDate() {
         initComponents();
     }
 
@@ -15,11 +15,11 @@ public class CellAmount extends TableCustomCell {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txt = new javax.swing.JLabel();
+        txt = new javax.swing.JTextField();
 
-        jLabel1.setText("Amount");
+        jLabel1.setText("Date of Loan");
 
-        txt.setText("20000");
+        txt.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -32,16 +32,16 @@ public class CellAmount extends TableCustomCell {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(txt)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -57,13 +57,13 @@ public class CellAmount extends TableCustomCell {
 
     @Override
     public TableCustomCell createComponentCellEditor(TableCustom tc, TableRowData trd, Object o, int i, int i1) {
-        CellAmount cell = new CellAmount();
+        CellDate cell = new CellDate();
         cell.setData(o);
         return cell;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel txt;
+    private javax.swing.JTextField txt;
     // End of variables declaration//GEN-END:variables
 }

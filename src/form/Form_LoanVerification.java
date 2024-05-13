@@ -6,29 +6,20 @@ import Employee.model.ModelName;
 import Employee.model.ModelStaff;
 import Main.Main;
 import cell.CellAmount;
-import cell.CellApproval;
 import cell.CellLoanID;
 import cell.CellLoanType;
 import cell.CellMonths;
-import com.raven.table.TableCustom;
-import com.raven.table.cell.TableCustomCell;
-import com.raven.table.model.TableRowData;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import entity.Loan;
 import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import model.LoanType;
-import model.ModelCustomer;
 import model.Model_ApprovedCustomer;
 import model.Model_Name;
 
 public class Form_LoanVerification extends javax.swing.JPanel {
 
     Main main;
-    private CellApproval cmdApproval;
-    ModelStaff mstest;
-    ModelName mntest;
+
     public Form_LoanVerification(Main main) {
         this.main = main;
         initComponents();
@@ -44,34 +35,25 @@ public class Form_LoanVerification extends javax.swing.JPanel {
         table1.addTableCell(new CellAmount(), 2);
         table1.addTableCell(new CellMonths(), 3);
         table1.addTableCell(new CellLoanType(), 4);
-        table1.addTableCell(new CellAction(), 5);
-        table1.addTableCell(new CellApproval(this), 6);
+        table1.addTableCell(new CellAction(this), 5);
 
-        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("Thien", "An", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 20000, "12", "Personal Loans"), false);
-        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("John", "Cena", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 30000, "12", "Personal Loans"), false);
-        table1.addRow(mstest = new ModelStaff(mntest = new ModelName("Minh", "Thuan", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 40000, "12", "Personal Loans"), false);
-    }
-
-    public void addApprovedCustomer(Model_Name name, int loanID, int amount, int months, LoanType loanType) {
-        Model_ApprovedCustomer approve = new Model_ApprovedCustomer(name, loanID, amount, months, loanType);
-        model.ModelCustomer mc = new model.ModelCustomer();
-        mc.setData(approve);
-        table2.addRow(approve);
-        table2.repaint();
+        table1.addRow(new ModelStaff(new ModelName("Thien", "An", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 20000, "12", "Personal Loans"), false);
+        table1.addRow(new ModelStaff(new ModelName("John", "Cena", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 30000, "24", "Payday Loans"), false);
+        table1.addRow(new ModelStaff(new ModelName("Minh", "Thuan", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 40000, "36", "Auto Loans"), false);
     }
 
     public DefaultTableModel getModel() {
         return (DefaultTableModel) table2.getModel();
     }
 
-    public void addRow(Model_ApprovedCustomer approve) {
+    public void addRow(Loan loan) {
         DefaultTableModel model = (DefaultTableModel) table2.getModel();
         Object[] rowData = new Object[]{
-            approve.getName(),
-            approve.getLoanID(),
-            approve.getAmount(),
-            approve.getMonths(),
-            approve.getLoanType()
+            loan.getName(),
+            loan.getLoanID(),
+            loan.getAmount(),
+            loan.getMonths(),
+            loan.getLoanType()
         };
         model.addRow(rowData);
     }
@@ -136,7 +118,7 @@ public class Form_LoanVerification extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Name", "Loan ID", "Amount", "Months", "Type of Loan", "Action", "Approval"
+                "Name", "Loan ID", "Amount", "Months", "Type of Loan", "Action"
             }
         ));
         table1.setSelectionBackground(new java.awt.Color(204, 204, 204));
@@ -145,7 +127,6 @@ public class Form_LoanVerification extends javax.swing.JPanel {
         if (table1.getColumnModel().getColumnCount() > 0) {
             table1.getColumnModel().getColumn(0).setPreferredWidth(150);
             table1.getColumnModel().getColumn(4).setPreferredWidth(120);
-            table1.getColumnModel().getColumn(6).setPreferredWidth(35);
         }
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N

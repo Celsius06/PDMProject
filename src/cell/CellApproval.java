@@ -1,9 +1,10 @@
 package cell;
 
-import Employee.cell.*;
+// This class is no longer be implemented and will be used for referencing necessary methods
 import com.raven.table.TableCustom;
 import com.raven.table.cell.TableCustomCell;
 import com.raven.table.model.TableRowData;
+import entity.Loan;
 import form.Form_LoanVerification;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -11,10 +12,11 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import model.LoanType;
 import model.ModelCustomer;
-import model.Model_ApprovedCustomer;
 import model.Model_Name;
 
 public class CellApproval extends TableCustomCell {
+
+    private final Form_LoanVerification table2;
 
     public CellApproval(Form_LoanVerification table2) {
         this.table2 = table2;
@@ -33,8 +35,7 @@ public class CellApproval extends TableCustomCell {
                     int amount = customerData.getAmount();
                     int months = customerData.getMonths();
                     LoanType loanType = customerData.getLoanType();
-                    System.out.println("if worked");
-                    table2.addApprovedCustomer(name, loanID, amount, months, loanType);
+
                     table2.repaint();
                 }
             }
@@ -47,12 +48,9 @@ public class CellApproval extends TableCustomCell {
         }
     }
 
-    private final Form_LoanVerification table2;
-
-    public void addApprovedCustomer(Model_Name name, int loanID, int amount, int months, LoanType loanType) {
-        Model_ApprovedCustomer approve = new Model_ApprovedCustomer(name, loanID, amount, months, loanType);
-        System.out.println("Adding new approved customer: " + approve.getName());
-        table2.addRow(approve);
+    public void addApprovedCustomer(String name, int loanID, int amount, int months, LoanType loanType) {
+        Loan loan = new Loan(name, loanID, amount, months, loanType);
+        table2.addRow(loan);
     }
 
     @SuppressWarnings("unchecked")
