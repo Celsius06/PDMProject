@@ -69,7 +69,7 @@ public class Main extends javax.swing.JFrame {
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
-            public void selected(int index){
+            public void selected(int index) {
                 try {
                     if (index == 0) {
                         setForm(home);
@@ -88,12 +88,12 @@ public class Main extends javax.swing.JFrame {
                     } else if (index == 12) {
                         setForm(new Form_About());
                         System.out.println(user.getUsername());
-                    } else if (index == 16) {
+                    } else if (index == 15) {
                         setForm(verify);
                     }
                 } catch (ClassNotFoundException | SQLException e) {
-                        e.printStackTrace();
-                } 
+                    e.printStackTrace();
+                }
             }
         });
         setForm(home);
@@ -134,9 +134,9 @@ public class Main extends javax.swing.JFrame {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
-    public void insertLoanData(int id, int amount, StatusType status, String date, double interest, int term, double monthlyPayment, LoanType type) throws SQLException, ClassNotFoundException{
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("insert into loan(loanID, loanAmount, loanStatus, loanDate, interestRate, loanTerm, monthlyPayment, loanType, customerID)values(?,?,?,?,?,?,?,?,?)");
+
+    public void insertLoanData(int id, int amount, StatusType status, String date, double interest, int term, double monthlyPayment, LoanType type) throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into loan(loanID, loanAmount, loanStatus, loanDate, interestRate, loanTerm, monthlyPayment, loanType, customerID)values(?,?,?,?,?,?,?,?,?)");
         p.setInt(1, id);
         p.setInt(2, amount);
         p.setString(3, status.toString());
@@ -148,10 +148,10 @@ public class Main extends javax.swing.JFrame {
         p.setInt(9, customer.getCustomerID());
         p.executeUpdate();
     }
-    
-    public int generateLoanID() throws SQLException, ClassNotFoundException {     
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan ORDER BY loanID DESC LIMIT 1");
-        ResultSet r = p.executeQuery(); 
+
+    public int generateLoanID() throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan ORDER BY loanID DESC LIMIT 1");
+        ResultSet r = p.executeQuery();
         if (r.next()) {
             int selectedId = r.getInt(1);
             selectedId++;
@@ -159,26 +159,26 @@ public class Main extends javax.swing.JFrame {
         }
         return 1;
     }
-    
-    public void setTransactionRecord() throws SQLException, ClassNotFoundException{
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType FROM loan WHERE customerID = ? ORDER BY loanDate");
+
+    public void setTransactionRecord() throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType FROM loan WHERE customerID = ? ORDER BY loanDate");
 // addRecord(String type, String amount, String date, String status, TransactionType transactionType)
         p.setInt(1, customer.getCustomerID());
         ResultSet r = p.executeQuery();
         trans.removeAllRow();
-        while(r.next()){
+        while (r.next()) {
             trans.addRecord(r.getString("loanType"), r.getInt("loanAmount"), r.getString("loanDate"), r.getString("loanStatus"), TransactionType.LOAN);
         }
-    } 
-    
-    public void setHome()throws SQLException, ClassNotFoundException{
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment FROM loan WHERE customerID = ? ORDER BY loanDate");
+    }
+
+    public void setHome() throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment FROM loan WHERE customerID = ? ORDER BY loanDate");
         p.setInt(1, customer.getCustomerID());
-//addStatus(int id, String type, String date, int amount, String status)        
+//addStatus(int id, String type, String date, int amount, String status)
         ResultSet r = p.executeQuery();
         home.removeAllRow();
         double totalMonthlyPayment = 0;
-        while(r.next()){
+        while (r.next()) {
             home.addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus")));
             totalMonthlyPayment += r.getDouble("monthlyPayment");
         }
