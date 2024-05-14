@@ -2,10 +2,10 @@ package form;
 
 import Main.Main;
 
-public class Form_Pay extends javax.swing.JPanel {
+public class Form_PayLoan extends javax.swing.JPanel {
     Main main;
     
-    public Form_Pay(Main main) {
+    public Form_PayLoan(Main main) {
         this.main = main;
         initComponents();
     }
@@ -142,7 +142,7 @@ public class Form_Pay extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(219, 219, 219)
                         .addComponent(PaymentForm, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

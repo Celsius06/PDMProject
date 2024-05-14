@@ -49,16 +49,18 @@ public class Option extends javax.swing.JPanel {
     
     public void setData(Model_Option data){
         lbTitle.setText(data.getTitle());
-        if(data.getLoan() == loan.PERSONAL){
+        if(data.getType() == "PERSONAL"){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/personal.png")));
-        } else if(data.getLoan() == loan.AUTO){
+        } else if(data.getType() == "AUTO"){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/car-loan.png")));
-        } else if(data.getLoan() == loan.BUSINESS){
+        } else if(data.getType() == "BUSINESS"){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/deal.png")));
-        } else if(data.getLoan() == loan.INSTALLMENT){
+        } else if(data.getType() == "INSTALLMENT"){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/credit.png")));
-        } else if(data.getLoan() == loan.PAYDAY){
+        } else if(data.getType() == "PAYDAY"){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/clock.png")));
+        } else {
+           lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/"+data.getType()+".png")));
         }
     }
 

@@ -11,11 +11,11 @@ public class Form_LoanApplication extends javax.swing.JPanel {
     public Form_LoanApplication(Main main) {
         this.main = main;
         initComponents();
-        option1.setData(new Model_Option("Personal",type.PERSONAL));
-        option2.setData(new Model_Option("Auto",type.AUTO));
-        option3.setData(new Model_Option("Business",type.BUSINESS));
-        option4.setData(new Model_Option("Installment",type.INSTALLMENT));
-        option5.setData(new Model_Option("Payday",type.PAYDAY));
+        option1.setData(new Model_Option("Personal",type.PERSONAL.toString()));
+        option2.setData(new Model_Option("Auto",type.AUTO.toString()));
+        option3.setData(new Model_Option("Business",type.BUSINESS.toString()));
+        option4.setData(new Model_Option("Installment",type.INSTALLMENT.toString()));
+        option5.setData(new Model_Option("Payday",type.PAYDAY.toString()));
     }
 
     @SuppressWarnings("unchecked")

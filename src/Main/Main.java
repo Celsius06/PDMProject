@@ -9,7 +9,7 @@ import event.EventMenuSelected;
 import form.Form_About;
 import form.Form_Home;
 import form.Form_LoanApplication;
-import form.Form_2Card;
+import form.Form_Payment;
 import form.Form_LoanVerification;
 import form.Form_TransactionRecord;
 import form.Form_Support;
@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import model.AccountType;
+import model.GenderType;
 import model.LoanType;
 import model.StatusType;
 import model.TransactionType;
@@ -30,7 +31,7 @@ public class Main extends javax.swing.JFrame {
     // Declaration
     public Form_Home home;
     public Form_LoanApplication loanApp;
-    public Form_2Card card;
+    public Form_Payment payment;
     public Form_TransactionRecord trans;
     public Form_LoanVerification verify;
     public Login login;
@@ -63,7 +64,7 @@ public class Main extends javax.swing.JFrame {
     public void setDashboard() throws SQLException, ClassNotFoundException {
         home = new Form_Home(this);
         loanApp = new Form_LoanApplication(this);
-        card = new Form_2Card(this);
+        payment = new Form_Payment(this);
         trans = new Form_TransactionRecord(this);
         verify = new Form_LoanVerification(this);
         menu.initMoving(Main.this);
@@ -74,12 +75,14 @@ public class Main extends javax.swing.JFrame {
                     if (index == 0) {
                         setForm(home);
                         setHome();
+                      //setAccountData();
                     } else if (index == 1) {
                         setForm(new Form_UserInfo());
+                      //setAccountData();
                     } else if (index == 5) {
                         setForm(loanApp);
                     } else if (index == 6) {
-                        setForm(card);
+                        setForm(payment);
                     } else if (index == 7) {
                         setForm(trans);
                         setTransactionRecord();
@@ -183,6 +186,32 @@ public class Main extends javax.swing.JFrame {
             totalMonthlyPayment += r.getDouble("monthlyPayment");
         }
         home.setCardData(customer.getAsset(), customer.getDebt(), user.getUserID(), totalMonthlyPayment);
+    }
+    
+    public void setAccountData() throws SQLException, ClassNotFoundException {
+        if(user.getRole() == AccountType.CUSTOMER){
+            PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT customerID, fName, mName, lName, date_of_birth, gender, phone_number, address, citizen_number, debt, asset FROM customer WHERE userID = ?");
+            p.setInt(1, user.getUserID());
+            ResultSet r = p.executeQuery();
+            r.next();
+            customer = new Customer(r.getInt("customerID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"), r.getDouble("debt"), r.getDouble("asset"));
+            if(r.getString("gender") != null) {
+                customer.setGender(GenderType.valueOf(r.getString("gender")));
+            } else {
+                customer.setGender(GenderType.NONE);
+            }
+        } else {
+            PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT employeeID, fName, mName, lName, date_of_birth, gender, phone_number, address, citizen_number FROM employee WHERE userID = ?");
+            p.setInt(1, user.getUserID());
+            ResultSet r = p.executeQuery();
+            r.next();
+            employee = new Employee(r.getInt("employeeID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"));
+            if(r.getString("gender") != null){
+                employee.setGender(GenderType.valueOf(r.getString("gender")));
+            } else {
+                employee.setGender(GenderType.NONE);
+            }            
+        }
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

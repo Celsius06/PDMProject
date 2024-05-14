@@ -30,22 +30,24 @@ public class Model_Option {
     
     private Icon icon;
     private String title;
-    private LoanType loan;
+    private String type;
 
-    public LoanType getLoan() {
-        return loan;
+    public String getType() {
+        return type;
     }
 
-    public void setLoan(LoanType loan) {
-        this.loan = loan;
+    public void setType(String type) {
+        this.type = type;
     }
+
+    
     
     public Model_Option() {
     }
 
-    public Model_Option(String title, LoanType loan) {
+    public Model_Option(String title, String type) {
         this.title = title;
-        this.loan = loan;
+        this.type = type;
     }
     
     

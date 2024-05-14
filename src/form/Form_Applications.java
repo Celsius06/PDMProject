@@ -28,7 +28,7 @@ public class Form_Applications extends javax.swing.JPanel {
     private double monthlyPayment;
     private Loan loan;
     private LocalDate currentDate = LocalDate.now();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String formattedDate = currentDate.format(formatter);
     public Form_Applications(Main main, LoanType type) {
         initConnection();
