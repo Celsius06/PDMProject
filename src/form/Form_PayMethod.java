@@ -7,15 +7,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
+import model.GenerateIDType;
+import model.RecordType;
+import model.TransactionType;
 
 public class Form_PayMethod extends javax.swing.JPanel {
     Main main;
-    String type;
+    TransactionType type;
     double amount = 0;
     private LocalDate currentDate = LocalDate.now();
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private String formattedDate = currentDate.format(formatter);
-    public Form_PayMethod(Main main, String type) {
+    public Form_PayMethod(Main main, TransactionType type) {
         this.main = main;
         this.type = type;
         initComponents();
@@ -24,11 +27,11 @@ public class Form_PayMethod extends javax.swing.JPanel {
         lbUserID.setText(main.user.getUserID()+"");
         lbBalance.setText(main.customer.getAsset()+" $");
         lbDate.setText(formattedDate);
-        if(type.equals("deposit")){
+        if(type == TransactionType.DEPOSIT){
             lbTitle.setText("Deposit Form");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/deposit.png")));
             lbTypeAmount.setText("Deposit amount:");
-        } else if (type.equals("withdrawal")){
+        } else if (type == TransactionType.WITHDRAWAL){
             lbTitle.setText("Withdrawal Form");
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/cash-withdrawal.png")));
             lbTypeAmount.setText("Withdrawal amount:");
@@ -40,7 +43,6 @@ public class Form_PayMethod extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lbTitle = new javax.swing.JLabel();
         panelBorderGradient1 = new swing.PanelBorderGradient();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -61,24 +63,23 @@ public class Form_PayMethod extends javax.swing.JPanel {
         textCardNum = new javax.swing.JTextField();
         buttonApply = new swing.Button();
         lbStatus = new javax.swing.JLabel();
+        panelBorderGradient2 = new swing.PanelBorderGradient();
+        lbTitle = new javax.swing.JLabel();
 
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(798, 511));
 
         jPanel1.setBackground(new java.awt.Color(153, 204, 255));
         jPanel1.setOpaque(false);
 
-        lbTitle.setFont(new java.awt.Font("Barlow", 1, 36)); // NOI18N
-        lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitle.setText("Title Form");
-
         panelBorderGradient1.setColor1(new java.awt.Color(0, 0, 204));
         panelBorderGradient1.setColor2(new java.awt.Color(0, 0, 102));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("First name:");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Last name:");
 
@@ -88,52 +89,57 @@ public class Form_PayMethod extends javax.swing.JPanel {
         lbLName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbLName.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("User ID:");
 
         lbUserID.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbUserID.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Current balance:");
 
-        lbBalance.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbBalance.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         lbBalance.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("After transaction:");
 
-        lbAfterTrans.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbAfterTrans.setBackground(new java.awt.Color(255, 255, 255));
+        lbAfterTrans.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         lbAfterTrans.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Transaction Date:");
 
         lbDate.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lbDate.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbTypeAmount.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lbTypeAmount.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         lbTypeAmount.setForeground(new java.awt.Color(255, 255, 255));
         lbTypeAmount.setText("Type amount:");
 
-        jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Credit card number:");
 
+        textAmount.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         textAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textAmountActionPerformed(evt);
             }
         });
 
+        textCardNum.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+
         buttonApply.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         buttonApply.setForeground(new java.awt.Color(255, 255, 255));
+        buttonApply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/payment.png"))); // NOI18N
         buttonApply.setText("Apply");
-        buttonApply.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        buttonApply.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         buttonApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonApplyActionPerformed(evt);
@@ -159,7 +165,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
                         .addComponent(lbFName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
                         .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,9 +180,9 @@ public class Form_PayMethod extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
-                        .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonApply, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                        .addGroup(panelBorderGradient1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonApply, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelBorderGradient1Layout.createSequentialGroup()
@@ -235,25 +241,49 @@ public class Form_PayMethod extends javax.swing.JPanel {
                 .addGap(25, 25, 25))
         );
 
+        panelBorderGradient2.setColor1(new java.awt.Color(0, 51, 255));
+        panelBorderGradient2.setColor2(new java.awt.Color(0, 0, 153));
+
+        lbTitle.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        lbTitle.setForeground(new java.awt.Color(255, 255, 255));
+        lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTitle.setText("Title Form");
+
+        javax.swing.GroupLayout panelBorderGradient2Layout = new javax.swing.GroupLayout(panelBorderGradient2);
+        panelBorderGradient2.setLayout(panelBorderGradient2Layout);
+        panelBorderGradient2Layout.setHorizontalGroup(
+            panelBorderGradient2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBorderGradient2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelBorderGradient2Layout.setVerticalGroup(
+            panelBorderGradient2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(227, Short.MAX_VALUE)
+                .addComponent(panelBorderGradient2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(227, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelBorderGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(74, 74, 74)
+                .addComponent(panelBorderGradient1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(44, 44, 44)
+                .addComponent(panelBorderGradient2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(panelBorderGradient1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -271,7 +301,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
     private void textAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textAmountActionPerformed
         try {
             amount = Integer.parseInt(textAmount.getText());
-            if(type.equals("deposit")){
+            if(type == TransactionType.DEPOSIT){
                 lbAfterTrans.setText(main.customer.getAsset()+amount+" $");
             } else {
                 if(main.customer.getAsset()>=amount){
@@ -292,15 +322,19 @@ public class Form_PayMethod extends javax.swing.JPanel {
             } else {
                 PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET asset = ? WHERE customerID = ?");
                 p.setInt(2, main.customer.getCustomerID());
-                if(type.equals("deposit")){
+                int transID = main.generateID(GenerateIDType.TRANSACTION);
+                if(type == TransactionType.DEPOSIT){
                     p.setDouble(1, main.customer.getAsset()+amount);
+                    main.insertTransactionData(transID, amount, main.today,TransactionType.DEPOSIT , 0);
                 } else {
                     p.setDouble(1, main.customer.getAsset()-amount);
-                }
+                    main.insertTransactionData(transID, amount, main.today,TransactionType.WITHDRAWAL , 0);
+                } 
                 p.executeUpdate();
-                p.close();
+                main.insertRecordData(main.generateID(GenerateIDType.RECORD), transID, RecordType.TRANSACTION);
+                lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
             }
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_buttonApplyActionPerformed
@@ -326,6 +360,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
     private javax.swing.JLabel lbTypeAmount;
     private javax.swing.JLabel lbUserID;
     private swing.PanelBorderGradient panelBorderGradient1;
+    private swing.PanelBorderGradient panelBorderGradient2;
     private javax.swing.JTextField textAmount;
     private javax.swing.JTextField textCardNum;
     // End of variables declaration//GEN-END:variables

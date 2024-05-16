@@ -8,6 +8,6 @@ package model;
  *
  * @author Asus
  */
-public enum TransactionType {
-    LOAN, PAY, DEPOSIT, WITHDRAWAL
+public enum GenerateIDType {
+    LOAN, RECORD, TRANSACTION, USER, CUSTOMER, EMPLOYEE
 }

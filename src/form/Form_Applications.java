@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.ImageIcon;
+import model.GenerateIDType;
 import model.LoanType;
+import model.RecordType;
 import model.StatusType;
 import model.TransactionType;
 
@@ -26,10 +28,8 @@ public class Form_Applications extends javax.swing.JPanel {
     private LoanType type;
     private double interestRate;
     private double monthlyPayment;
+    private double payRequire;
     private Loan loan;
-    private LocalDate currentDate = LocalDate.now();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private String formattedDate = currentDate.format(formatter);
     public Form_Applications(Main main, LoanType type) {
         initConnection();
         this.main = main;
@@ -327,14 +327,10 @@ public class Form_Applications extends javax.swing.JPanel {
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
         lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
         try{
-            main.trans.addRecord(type.toString(), sliderAmount.getValue(), formattedDate, StatusType.PENDING.toString(), TransactionType.LOAN);
-            main.insertLoanData(main.generateLoanID(), sliderAmount.getValue(), StatusType.PENDING, formattedDate, interestRate, sliderMonth.getValue(), monthlyPayment, type);
-//            PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET asset = ?, debt = ? WHERE customerID = ?");
-//            p.setDouble(1, main.customer.getAsset()+sliderAmount.getValue());
-//            p.setDouble(2, main.customer.getAsset()+sliderAmount.getValue());
-//            p.setInt(3, main.customer.getCustomerID());
-//            p.executeUpdate();
-//            p.close();
+            int loanID = main.generateID(GenerateIDType.LOAN);
+            payRequire = monthlyPayment*sliderMonth.getValue();
+            main.insertLoanData(loanID, sliderAmount.getValue(), StatusType.PENDING, main.today, interestRate, sliderMonth.getValue(), monthlyPayment, type, payRequire, 0.0);   
+            main.insertRecordData(main.generateID(GenerateIDType.RECORD), loanID, RecordType.LOAN);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

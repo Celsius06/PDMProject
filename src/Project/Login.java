@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.sql.*;
 import model.AccountType;
 import model.GenderType;
+import model.GenerateIDType;
 public class Login extends javax.swing.JFrame {
     
     
@@ -20,6 +21,7 @@ public class Login extends javax.swing.JFrame {
     private Customer customer = new Customer();
     private Employee employee = new Employee();
     private int id;
+    private GenerateIDType GType;
     static Main main;
     public Login(Main main) {
         this.main = main;
@@ -53,38 +55,38 @@ public class Login extends javax.swing.JFrame {
         }
     }
     
-    private int generateUserID() throws SQLException, ClassNotFoundException {     
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT userID FROM account ORDER BY userID DESC LIMIT 1");
-        ResultSet r = p.executeQuery(); 
-        if (r.next()) {
-            int selectedId = r.getInt(1);
-            selectedId++;
-            return selectedId;
-        }
-        return 1;
-    }
-    
-    private int generateCustomerID() throws SQLException, ClassNotFoundException {     
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT customerID FROM customer ORDER BY customerID DESC LIMIT 1");
-        ResultSet r = p.executeQuery(); 
-        if (r.next()) {
-            int selectedId = r.getInt(1);
-            selectedId++;
-            return selectedId;
-        }
-        return 1;
-    }
-    
-    private int generateEmployeeID() throws SQLException, ClassNotFoundException {     
-        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT employeeID FROM employee ORDER BY employeeID DESC LIMIT 1");
-        ResultSet r = p.executeQuery(); 
-        if (r.next()) {
-            int selectedId = r.getInt(1);
-            selectedId++;
-            return selectedId;
-        }
-        return 1;
-    }
+//    private int generateUserID() throws SQLException, ClassNotFoundException {     
+//        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT userID FROM account ORDER BY userID DESC LIMIT 1");
+//        ResultSet r = p.executeQuery(); 
+//        if (r.next()) {
+//            int selectedId = r.getInt(1);
+//            selectedId++;
+//            return selectedId;
+//        }
+//        return 1;
+//    }
+//    
+//    private int generateCustomerID() throws SQLException, ClassNotFoundException {     
+//        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT customerID FROM customer ORDER BY customerID DESC LIMIT 1");
+//        ResultSet r = p.executeQuery(); 
+//        if (r.next()) {
+//            int selectedId = r.getInt(1);
+//            selectedId++;
+//            return selectedId;
+//        }
+//        return 1;
+//    }
+//    
+//    private int generateEmployeeID() throws SQLException, ClassNotFoundException {     
+//        PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT employeeID FROM employee ORDER BY employeeID DESC LIMIT 1");
+//        ResultSet r = p.executeQuery(); 
+//        if (r.next()) {
+//            int selectedId = r.getInt(1);
+//            selectedId++;
+//            return selectedId;
+//        }
+//        return 1;
+//    }
     
     public boolean isUsernameNotExist(String username) throws SQLException, ClassNotFoundException {
         PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT COUNT(*) FROM account WHERE username = ?");
@@ -476,7 +478,7 @@ public class Login extends javax.swing.JFrame {
         password = textRegPassword1.getText();
         conPassword = textRegPassword2.getText();
         try {
-            id = generateUserID();
+            id = main.generateID(GType.USER);
             if(username == "" || password == "" || conPassword == ""){
                 lbUserExist.setVisible(false);
                 lbDiffPassword.setVisible(false);
@@ -494,9 +496,9 @@ public class Login extends javax.swing.JFrame {
                 lbUserExist.setVisible(false);
                 lbDiffPassword.setVisible(false);
                 lbRegNull.setVisible(false);
-                user = new Account(generateUserID(), username, password, null);
+                user = new Account(main.generateID(GType.USER), username, password, null);
                 if(buttonCustomer.isSelected()){
-                    customer.setCustomerID(generateCustomerID());
+                    customer.setCustomerID(main.generateID(GType.CUSTOMER));
                     customer.setDebt(0);
                     customer.setAsset(0);
                     user.setRole(AccountType.CUSTOMER);
@@ -507,14 +509,14 @@ public class Login extends javax.swing.JFrame {
                     p.setString(4, AccountType.CUSTOMER.toString());
                     p.executeUpdate();
                     p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into customer(customerID,userID,debt,asset)values(?,?,?,?)");
-                    p.setInt(1, generateCustomerID());
+                    p.setInt(1, main.generateID(GType.CUSTOMER));
                     p.setInt(2, id);
                     p.setBigDecimal(3, BigDecimal.ZERO);
                     p.setBigDecimal(4, BigDecimal.ZERO);
                     p.executeUpdate();
                     main.setCustomer(customer);
                 } else {
-                    employee.setEmployeeID(generateEmployeeID());
+                    employee.setEmployeeID(main.generateID(GType.EMPLOYEE));
                     user.setRole(AccountType.EMPLOYEE);
                     PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("insert into account(userID, username, password, role)values(?,?,?,?)");
                     p.setInt(1, id);
@@ -523,7 +525,7 @@ public class Login extends javax.swing.JFrame {
                     p.setString(4, AccountType.EMPLOYEE.toString());
                     p.executeUpdate();
                     p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into employee(employeeID,userID)values(?,?)");
-                    p.setInt(1, generateEmployeeID());
+                    p.setInt(1, main.generateID(GType.EMPLOYEE));
                     p.setInt(2, id);
                     p.executeUpdate();
                     main.setEmployee(employee);

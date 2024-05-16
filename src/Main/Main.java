@@ -18,11 +18,15 @@ import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import model.AccountType;
 import model.GenderType;
+import model.GenerateIDType;
 import model.LoanType;
+import model.RecordType;
 import model.StatusType;
 import model.TransactionType;
 
@@ -38,6 +42,9 @@ public class Main extends javax.swing.JFrame {
     public Account user;
     public Customer customer;
     public Employee employee;
+    private LocalDate currentDate = LocalDate.now();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public String today = currentDate.format(formatter);
     //In case we want form to be static instead of new (reset when change form)
     // private form1 = new Form_Home();
     // setForm(form1);
@@ -75,14 +82,15 @@ public class Main extends javax.swing.JFrame {
                     if (index == 0) {
                         setForm(home);
                         setHome();
-                      //setAccountData();
+                        setAccountData();
                     } else if (index == 1) {
                         setForm(new Form_UserInfo());
-                      //setAccountData();
+                        setAccountData();
                     } else if (index == 5) {
                         setForm(loanApp);
                     } else if (index == 6) {
                         setForm(payment);
+                        setAccountData();
                     } else if (index == 7) {
                         setForm(trans);
                         setTransactionRecord();
@@ -138,8 +146,8 @@ public class Main extends javax.swing.JFrame {
         this.customer = customer;
     }
 
-    public void insertLoanData(int id, int amount, StatusType status, String date, double interest, int term, double monthlyPayment, LoanType type) throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into loan(loanID, loanAmount, loanStatus, loanDate, interestRate, loanTerm, monthlyPayment, loanType, customerID)values(?,?,?,?,?,?,?,?,?)");
+    public void insertLoanData(int id, int amount, StatusType status, String date, double interest, int term, double monthlyPayment, LoanType type, double payRequire, double amountPaid) throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into loan(loanID, loanAmount, loanStatus, loanDate, interestRate, loanTerm, monthlyPayment, loanType, payRequire, amountPaid, customerID)values(?,?,?,?,?,?,?,?,?,?,?)");
         p.setInt(1, id);
         p.setInt(2, amount);
         p.setString(3, status.toString());
@@ -148,42 +156,138 @@ public class Main extends javax.swing.JFrame {
         p.setInt(6, term);
         p.setDouble(7, monthlyPayment);
         p.setString(8, type.toString());
-        p.setInt(9, customer.getCustomerID());
-        p.executeUpdate();
+        p.setDouble(9, payRequire);
+        p.setDouble(10, amountPaid);
+        p.setInt(11, customer.getCustomerID());
+        p.executeUpdate();    
+    }
+    
+    public void insertTransactionData(int id, double amount, String date, TransactionType type, int targetID) throws SQLException, ClassNotFoundException{
+        PreparedStatement p;
+        ResultSet r;
+        if(type == TransactionType.DEPOSIT){
+            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, deposit, date, transType, customerID)values(?,?,?,?,?)");
+            p.setInt(1, id);
+            p.setDouble(2, amount);
+            p.setString(3, date);
+            p.setString(4, type.toString());
+            p.setInt(5, customer.getCustomerID());
+            p.executeUpdate();
+        } else if (type == TransactionType.WITHDRAWAL){
+            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, withdrawal, date, transType, customerID)values(?,?,?,?,?)");
+            p.setInt(1, id);
+            p.setDouble(2, amount);
+            p.setString(3, date); 
+            p.setString(4, type.toString());
+            p.setInt(5, customer.getCustomerID());
+            p.executeUpdate();
+        } else if (type == TransactionType.PAY){
+            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, payLoan, date, transType, loanID, customerID)values(?,?,?,?,?,?)");
+            p.setInt(1, id);
+            p.setDouble(2, amount);
+            p.setString(3, date);
+            p.setString(4, type.toString());
+            p.setInt(5, targetID);
+            p.setInt(6, customer.getCustomerID());
+            p.executeUpdate();
+        }        
+    }
+    
+    public void insertRecordData(int recordID, int targetID, RecordType type) throws SQLException, ClassNotFoundException{
+        String queryInsertRec = null;
+        if(type == RecordType.LOAN){
+            queryInsertRec = "insert into record(recordID, loanID, recordType, customerID)values(?,?,?,?)";
+        } else if(type == RecordType.TRANSACTION){
+            queryInsertRec = "insert into record(recordID, transactionID, recordType, customerID)values(?,?,?,?)";
+        }
+        if(queryInsertRec != null){
+            PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(queryInsertRec);
+            p.setInt(1, recordID);
+            p.setInt(2, targetID);
+            p.setString(3, type.toString());
+            p.setInt(4, customer.getCustomerID());
+            p.executeUpdate();
+        }
     }
 
-    public int generateLoanID() throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan ORDER BY loanID DESC LIMIT 1");
-        ResultSet r = p.executeQuery();
-        if (r.next()) {
-            int selectedId = r.getInt(1);
-            selectedId++;
-            return selectedId;
-        }
+    
+    public int generateID(GenerateIDType type) throws SQLException, ClassNotFoundException {
+        String queryGenerate = null;
+        if(type == GenerateIDType.LOAN){
+            queryGenerate = "SELECT loanID FROM loan ORDER BY loanID DESC LIMIT 1";
+        } else if (type == GenerateIDType.RECORD) {
+            queryGenerate = "SELECT recordID FROM record ORDER BY recordID DESC LIMIT 1";
+        } else if (type == GenerateIDType.TRANSACTION){
+            queryGenerate = "SELECT transactionID FROM transaction ORDER BY transactionID DESC LIMIT 1";
+        } else if (type == GenerateIDType.CUSTOMER) {
+            queryGenerate = "SELECT customerID FROM customer ORDER BY customerID DESC LIMIT 1";
+        } else if (type == GenerateIDType.EMPLOYEE) {
+            queryGenerate = "SELECT employeeID FROM employee ORDER BY employeeID DESC LIMIT 1";
+        } else if (type == GenerateIDType.USER) {
+            queryGenerate = "SELECT userID FROM account ORDER BY userID DESC LIMIT 1";
+        }    
+        if(queryGenerate != null){
+            PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement(queryGenerate);
+            ResultSet r = p.executeQuery();
+            if (r.next()) {
+                int selectedId = r.getInt(1);
+                selectedId++;
+                return selectedId;
+            }
+        } 
         return 1;
     }
 
     public void setTransactionRecord() throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType FROM loan WHERE customerID = ? ORDER BY loanDate");
-// addRecord(String type, String amount, String date, String status, TransactionType transactionType)
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT recordID, loanID, transactionID, recordType FROM record WHERE customerID = ? ORDER BY recordID");
         p.setInt(1, customer.getCustomerID());
         ResultSet r = p.executeQuery();
         trans.removeAllRow();
         while (r.next()) {
-            trans.addRecord(r.getString("loanType"), r.getInt("loanAmount"), r.getString("loanDate"), r.getString("loanStatus"), TransactionType.LOAN);
+            RecordType type = RecordType.valueOf(r.getString("recordType"));
+            if(type == RecordType.LOAN){
+                PreparedStatement p1 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, loanAmount, loanDate, loanStatus FROM loan WHERE loanID = ?");
+                p1.setInt(1, r.getInt("loanID"));
+                ResultSet r1 = p1.executeQuery();
+                r1.next();
+                trans.addRecord(r1.getString("loanType"), r1.getInt("loanAmount"), r1.getString("loanDate"), r1.getString("loanStatus"), TransactionType.LOAN);
+            }
+            if (type == RecordType.TRANSACTION){
+                PreparedStatement p2 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, deposit, withdrawal, payLoan, transType, date FROM transaction WHERE transactionID = ?");
+                p2.setInt(1, r.getInt("transactionID"));
+                ResultSet r2 = p2.executeQuery();
+                r2.next();
+                if(r2.getString("transType").equals(TransactionType.PAY.toString())){
+                    PreparedStatement p3 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, payRequire FROM loan WHERE loanID = ?");
+                    p3.setInt(1, r2.getInt("loanID")); 
+                    ResultSet r3 = p3.executeQuery();
+                    r3.next();
+                    trans.addRecord("PAY BACK "+r3.getString("loanType"), r3.getInt("payRequire"), r2.getString("date"),"Loan ID "+r2.getInt("loanID")+" | Paid: "+ r2.getInt("payLoan"), TransactionType.PAY);
+                }
+                if(r2.getString("transType").equals(TransactionType.DEPOSIT.toString())){
+                    trans.addRecord(r2.getString("transType"), r2.getInt("deposit"), r2.getString("date"), "SUCCESS", TransactionType.DEPOSIT);
+                }
+                if(r2.getString("transType").equals(TransactionType.WITHDRAWAL.toString())){
+                    trans.addRecord(r2.getString("transType"), r2.getInt("withdrawal"), r2.getString("date"), "SUCCESS", TransactionType.WITHDRAWAL);
+                }
+            }
         }
     }
 
     public void setHome() throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment FROM loan WHERE customerID = ? ORDER BY loanDate");
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment, payRequire, amountPaid FROM loan WHERE customerID = ? AND payRequire>amountPaid ORDER BY loanDate");
         p.setInt(1, customer.getCustomerID());
 //addStatus(int id, String type, String date, int amount, String status)
         ResultSet r = p.executeQuery();
         home.removeAllRow();
         double totalMonthlyPayment = 0;
-        while (r.next()) {
-            home.addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus")));
-            totalMonthlyPayment += r.getDouble("monthlyPayment");
+        while (r.next()) {       
+            home.addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus"))); 
+            if((r.getDouble("payRequire")-r.getDouble("amountPaid"))<r.getDouble("monthlyPayment")){
+                totalMonthlyPayment += r.getDouble("payRequire")-r.getDouble("amountPaid");
+            } else {
+                totalMonthlyPayment += r.getDouble("monthlyPayment");
+            }
         }
         home.setCardData(customer.getAsset(), customer.getDebt(), user.getUserID(), totalMonthlyPayment);
     }

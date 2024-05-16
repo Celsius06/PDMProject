@@ -39,8 +39,8 @@ public class Form_Home extends javax.swing.JPanel {
         table.removeAllRows();
     }
     public void setCardData(double asset, double debt, int id, double monthlyPayment){
-        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Asset", ""+String.format("%.2f",asset), "User ID: "+id));
-        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", ""+String.format("%.2f",debt), "Total monthly payment: "+String.format("%.2f",monthlyPayment)));
+        card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Asset", String.format("%.2f",asset)+"$", "User ID: "+id));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", String.format("%.2f",debt)+"$", "Total monthly payment: "+String.format("%.2f",monthlyPayment)));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

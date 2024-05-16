@@ -1,9 +1,11 @@
 package form;
 
 import Main.Main;
-import form.Form_PayMethod;
-import form.Form_PayLoan;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Model_Option;
+import model.TransactionType;
 
 public class Form_Payment extends javax.swing.JPanel {
     Main main;
@@ -116,17 +118,24 @@ public class Form_Payment extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     private void option1MouseClicked(java.awt.event.MouseEvent evt) {                                     
-//        Form_Deposit depositForm = new Form_Deposit(main);
-//        main.setForm(depositForm);
+        Form_PayLoan payLoanForm = new Form_PayLoan(main);
+        try {
+            payLoanForm.setPayLoanForm();
+        } catch (SQLException ex) {
+            Logger.getLogger(Form_Payment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Form_Payment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        main.setForm(payLoanForm);
     } 
     
     private void option2MouseClicked(java.awt.event.MouseEvent evt) {  
-        Form_PayMethod payMethodForm = new Form_PayMethod(main,"withdrawal");
+        Form_PayMethod payMethodForm = new Form_PayMethod(main,TransactionType.WITHDRAWAL);
         main.setForm(payMethodForm);
     } 
     
     private void option3MouseClicked(java.awt.event.MouseEvent evt) {                                     
-        Form_PayMethod payMethodForm = new Form_PayMethod(main,"deposit");
+        Form_PayMethod payMethodForm = new Form_PayMethod(main,TransactionType.DEPOSIT);
         main.setForm(payMethodForm);
     } 
     

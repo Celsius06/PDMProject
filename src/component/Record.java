@@ -38,12 +38,14 @@ public class Record extends javax.swing.JPanel {
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/bank (5).png")));
        } else if(data.getTrans() == TransactionType.LOAN){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/loan (2).png")));
-       } else if(data.getTrans() == TransactionType.ASSET){
+       } else if(data.getTrans() == TransactionType.DEPOSIT){
+           lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/budget (3).png")));
+       } else if(data.getTrans() == TransactionType.WITHDRAWAL){
            lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/budget (3).png")));
        }
        lbAmount.setText(data.getAmount()+" $");
        lbDate.setText(data.getDate());
-       lbStatus.setText("Status: "+data.getStatus());
+       lbStatus.setText(data.getStatus());
        lbTransType.setText(data.getType());
     }
     
