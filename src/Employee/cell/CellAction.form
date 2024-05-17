@@ -45,6 +45,9 @@
           <Image iconType="3" name="/Graphics/action/viewclosed_18px.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdViewClosedActionPerformed"/>
+      </Events>
     </Component>
     <Component class="Employee.swing.Button" name="cmdDelete">
       <Properties>

@@ -8,15 +8,17 @@ import form.Form_LoanVerification;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static javax.management.Query.lt;
 import javax.swing.ImageIcon;
+import javax.swing.table.TableModel;
 import model.LoanType;
 
 public class CellAction extends TableCustomCell {
 
-    private Form_LoanVerification table2;
+    private Form_LoanVerification table1;
 
     public CellAction(Form_LoanVerification table2) {
-        this.table2 = table2;
+        this.table1 = table2;
         initComponents();
     }
 
@@ -42,14 +44,19 @@ public class CellAction extends TableCustomCell {
         cmdDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                   System.out.print(table.getValueAt(row, col) + "\t");
+                }
                 table.deleteRowAt(getRow(), true);
+                
             }
         });
 
         cmdApproval.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                table2.addRow(new Loan("Thien An", 1, 20000, 12, LoanType.PERSONAL));
+                table1.addRow(new Loan("Thien An", 1, 20000, 12, LoanType.PERSONAL));
+                printTableData();
             }
         });
 
@@ -62,7 +69,24 @@ public class CellAction extends TableCustomCell {
             cmdViewClosed.setIcon(new ImageIcon(getClass().getResource("/Graphics/action/viewclosed_18px.png")));
         }
     }
+    
+    private void printTableData() {
+        TableModel model = table1.getModel();
+        int columnCount = model.getColumnCount();
+        int rowCount = model.getRowCount();
 
+        for (int col = 0; col < columnCount; col++) {
+            System.out.print(model.getColumnName(col) + "\t");
+        }
+        System.out.println();
+
+        for (int row = 0; row < rowCount; row++) {
+            for (int col = 0; col < columnCount; col++) {
+                System.out.print(model.getValueAt(row, col) + "\t");
+            }
+            System.out.println();
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,6 +96,11 @@ public class CellAction extends TableCustomCell {
         cmdApproval = new swing.Button();
 
         cmdViewClosed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Graphics/action/viewclosed_18px.png"))); // NOI18N
+        cmdViewClosed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdViewClosedActionPerformed(evt);
+            }
+        });
 
         cmdDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Employee/icon/cancel.png"))); // NOI18N
 
@@ -100,6 +129,10 @@ public class CellAction extends TableCustomCell {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmdViewClosedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdViewClosedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdViewClosedActionPerformed
+
     @Override
     public void setData(Object o) {
 
@@ -112,7 +145,7 @@ public class CellAction extends TableCustomCell {
 
     @Override
     public Component createComponentCellRender(TableCustom table, TableRowData data, int row, int column) {
-        CellAction cell = new CellAction(table2);
+        CellAction cell = new CellAction(table1);
         cell.checkIcon(data);
         cell.addEvent(table, data, row);
         return cell;
@@ -125,7 +158,7 @@ public class CellAction extends TableCustomCell {
 
     @Override
     public TableCustomCell createComponentCellEditor(TableCustom table, TableRowData data, Object o, int row, int column) {
-        CellAction cell = new CellAction(table2);
+        CellAction cell = new CellAction(table1);
         cell.checkIcon(data);
         cell.addEvent(table, data, row);
         return cell;

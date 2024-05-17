@@ -1,5 +1,6 @@
 package component;
 
+import Main.Main;
 import event.EventMenuSelected;
 import model.Model_Menu;
 import java.awt.*;
@@ -14,15 +15,14 @@ public class Menu extends javax.swing.JPanel {
         this.event = event;
         listMenu1.addEventMenuSelected(event);
     }
-
+    
     public Menu() {
         initComponents();
         setOpaque(false);
         listMenu1.setOpaque(false);
-        init();
     }
 
-    private void init() {
+    public void initCustomer() {
         listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
@@ -34,14 +34,28 @@ public class Menu extends javax.swing.JPanel {
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("support", "Support", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("info", "About", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-
-        listMenu1.addItem(new Model_Menu("", "For Employee", Model_Menu.MenuType.TITLE));
-        listMenu1.addItem(new Model_Menu("loan", "Loan Verification", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("logout", "Logout", Model_Menu.MenuType.MENU));
     }
+    public void initEmployee(){
+        listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("", "Loan Management", Model_Menu.MenuType.TITLE));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("wanted", "Loan Verification", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("file", "Loan Details", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("", "Other Database", Model_Menu.MenuType.TITLE));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("contact-list", "Account Details", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("trade", "Transaction Details", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("logout", "Logout", Model_Menu.MenuType.MENU));
 
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

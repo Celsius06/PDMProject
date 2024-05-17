@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
     //In case we want form to be static instead of new (reset when change form)
     // private form1 = new Form_Home();
     // setForm(form1);
-
+    
     public Main() {
         initComponents();
         initConnection();
@@ -69,46 +69,67 @@ public class Main extends javax.swing.JFrame {
     }
 
     public void setDashboard() throws SQLException, ClassNotFoundException {
-        home = new Form_Home(this);
-        loanApp = new Form_LoanApplication(this);
-        payment = new Form_Payment(this);
-        trans = new Form_TransactionRecord(this);
-        verify = new Form_LoanVerification(this);
+        if(user.getRole()==AccountType.CUSTOMER){
+            home = new Form_Home(this);
+            loanApp = new Form_LoanApplication(this);
+            payment = new Form_Payment(this);
+            trans = new Form_TransactionRecord(this);
+            menu.initCustomer();
+            setForm(home);
+            setHome();
+        } else {
+            verify = new Form_LoanVerification(this);
+            menu.initEmployee();
+        }
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
                 try {
-                    if (index == 0) {
-                        setForm(home);
-                        setHome();
-                        setAccountData();
-                    } else if (index == 1) {
-                        setForm(new Form_UserInfo());
-                        setAccountData();
-                    } else if (index == 5) {
-                        setForm(loanApp);
-                    } else if (index == 6) {
-                        setForm(payment);
-                        setAccountData();
-                    } else if (index == 7) {
-                        setForm(trans);
-                        setTransactionRecord();
-                    } else if (index == 11) {
-                        setForm(new Form_Support());
-                    } else if (index == 12) {
-                        setForm(new Form_About());
-                        System.out.println(user.getUsername());
-                    } else if (index == 15) {
-                        setForm(verify);
+                    if(user.getRole() == AccountType.CUSTOMER){
+                        if (index == 0) {
+                            setForm(home);
+                            setHome();
+                            setAccountData();
+                        } else if (index == 1) {
+                            setForm(new Form_UserInfo(Main.this));
+                            setAccountData();
+                        } else if (index == 5) {
+                            setForm(loanApp);
+                        } else if (index == 6) {
+                            setForm(payment);
+                            setAccountData();
+                        } else if (index == 7) {
+                            setForm(trans);
+                            setTransactionRecord();
+                        } else if (index == 11) {
+                            setForm(new Form_About());
+                        } else if (index == 12) {
+                            //logout
+                        }
+                    } else {
+                        if (index == 0) {
+                            //home
+                        } else if (index == 1){
+                            setForm(new Form_UserInfo(Main.this));
+                            setAccountData();
+                        } else if (index == 5){
+                            setForm(verify);
+                        } else if (index == 6){
+                            //loan data
+                        } else if (index == 10){
+                            //acc detail
+                        } else if (index == 11){
+                            //trans data
+                        } else if (index == 15){
+                            //logout
+                        }
                     }
                 } catch (ClassNotFoundException | SQLException e) {
                     e.printStackTrace();
                 }
             }
         });
-        setForm(home);
-        setHome();
     }
 
     private void initConnection() {

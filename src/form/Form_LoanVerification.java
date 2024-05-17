@@ -36,7 +36,8 @@ public class Form_LoanVerification extends javax.swing.JPanel {
         table1.addTableCell(new CellMonths(), 3);
         table1.addTableCell(new CellLoanType(), 4);
         table1.addTableCell(new CellAction(this), 5);
-
+        
+       
         table1.addRow(new ModelStaff(new ModelName("Thien", "An", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 20000, "12", "Personal Loans"), false);
         table1.addRow(new ModelStaff(new ModelName("John", "Cena", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 30000, "24", "Payday Loans"), false);
         table1.addRow(new ModelStaff(new ModelName("Minh", "Thuan", new ImageIcon(getClass().getResource("/Employee/icon/profile.jpg")), ""), "1", 40000, "36", "Auto Loans"), false);
