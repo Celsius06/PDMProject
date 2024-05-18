@@ -537,12 +537,12 @@ public class Form_UserInfo extends javax.swing.JPanel {
             p.setString(3, textLname.getText());
             p.setString(4, textBirth.getText());
             p.setString(5, (String) boxGender.getSelectedItem());
-            p.setInt(6, phoneNumber);
+            p.setString(6, textPhone.getText());
             p.setString(7, textAddress.getText());
-            p.setInt(8, citizenNumber);
+            p.setString(8, textCitizen.getText());
             p.setInt(9, main.user.getUserID());
             p.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Your informations have been updated", null, JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, "Your informations have been updated", null, JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
                 e.printStackTrace();
         }
@@ -553,15 +553,15 @@ public class Form_UserInfo extends javax.swing.JPanel {
             PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT password FROM account WHERE userID = ?");
             p.setInt(1, main.user.getUserID());
             ResultSet r = p.executeQuery();
-            int password = r.getInt("password");
-            int password0 = Integer.parseInt(textPass.getText());
-            int password1 = Integer.parseInt(textNPass.getText());
-            int password2 = Integer.parseInt(textCPass.getText());
-            if(password != password0){
+            String password = r.getString("password");
+            String password0 = textPass.getText();
+            String password1 = textNPass.getText();
+            String password2 = textCPass.getText();
+            if(!password.equals(password0)){
                 lbInvalid1.setVisible(true);
                 lbInvalid2.setVisible(false);
                 lbInvalid3.setVisible(false);
-            } else if(password1 != password2){
+            } else if(!password1.equals(password2)){
                 lbInvalid1.setVisible(false);
                 lbInvalid2.setVisible(true);
                 lbInvalid3.setVisible(true);
@@ -570,10 +570,10 @@ public class Form_UserInfo extends javax.swing.JPanel {
                 lbInvalid2.setVisible(false);
                 lbInvalid3.setVisible(false);
                 p = DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE user SET password = ? WHERE userID = ?");
-                p.setInt(1, password1);
+                p.setString(1, password1);
                 p.setInt(2, main.user.getUserID());
                 p.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Your password has been changed", null, JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, "Your password has been changed", null, JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
                 e.printStackTrace();

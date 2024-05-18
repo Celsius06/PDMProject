@@ -649,7 +649,7 @@ public class Login extends javax.swing.JFrame {
                             p.setInt(1, id);
                             r = p.executeQuery();
                             r.next();
-                            customer = new Customer(r.getInt("customerID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"), r.getDouble("debt"), r.getDouble("asset"));
+                            customer = new Customer(r.getInt("customerID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getString("phone_number"), r.getString("address"), r.getString("citizen_number"), r.getDouble("debt"), r.getDouble("asset"));
                             if(r.getString("gender") != null) {
                                 customer.setGender(GenderType.valueOf(r.getString("gender")));
                             } else {
@@ -662,7 +662,7 @@ public class Login extends javax.swing.JFrame {
                             p.setInt(1, id);
                             r = p.executeQuery();
                             r.next();
-                            employee = new Employee(r.getInt("employeeID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getInt("phone_number"), r.getString("address"), r.getInt("citizen_number"));
+                            employee = new Employee(r.getInt("employeeID"), r.getString("fName"), r.getString("mName"), r.getString("lName"), r.getString("date_of_birth"), null, r.getString("phone_number"), r.getString("address"), r.getString("citizen_number"));
                             if(r.getString("gender") != null){
                                 employee.setGender(GenderType.valueOf(r.getString("gender")));
                             } else {
