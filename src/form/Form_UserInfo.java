@@ -553,6 +553,7 @@ public class Form_UserInfo extends javax.swing.JPanel {
             PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT password FROM account WHERE userID = ?");
             p.setInt(1, main.user.getUserID());
             ResultSet r = p.executeQuery();
+            r.next();
             String password = r.getString("password");
             String password0 = textPass.getText();
             String password1 = textNPass.getText();
@@ -569,7 +570,7 @@ public class Form_UserInfo extends javax.swing.JPanel {
                 lbInvalid1.setVisible(false);
                 lbInvalid2.setVisible(false);
                 lbInvalid3.setVisible(false);
-                p = DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE user SET password = ? WHERE userID = ?");
+                p = DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE account SET password = ? WHERE userID = ?");
                 p.setString(1, password1);
                 p.setInt(2, main.user.getUserID());
                 p.executeUpdate();

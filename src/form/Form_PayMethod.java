@@ -322,6 +322,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
             if(lbAfterTrans.getText().equals("Invalid value!") || amount == 0){
                 lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/cross (1).png")));
             } else {
+                
                 PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET asset = ? WHERE customerID = ?");
                 p.setInt(2, main.customer.getCustomerID());
                 int transID = main.generateID(GenerateIDType.TRANSACTION);
@@ -335,6 +336,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
                 p.executeUpdate();
                 main.insertRecordData(main.generateID(GenerateIDType.RECORD), transID, RecordType.TRANSACTION);
                 lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
+                main.setAccountData();
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

@@ -262,6 +262,7 @@ public class Form_PayLoan extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
+        
         String selectedItem = (String) boxLoan.getSelectedItem();
         int id = 0;
         if(selectedItem != null){
@@ -271,6 +272,7 @@ public class Form_PayLoan extends javax.swing.JPanel {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/cross (1).png")));
         } else {
             try {
+                
                 PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE loan SET amountPaid = ? WHERE loanID = ?");
                 p.setDouble(1, amountPaid+payAmount);
                 p.setInt(2, id);
@@ -284,6 +286,8 @@ public class Form_PayLoan extends javax.swing.JPanel {
                 main.insertTransactionData(transID, payAmount, main.today, TransactionType.PAY, id);
                 lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/tick.png")));
                 main.insertRecordData(main.generateID(GenerateIDType.RECORD), transID, RecordType.TRANSACTION);
+                main.setAccountData();
+                
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
