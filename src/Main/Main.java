@@ -1,18 +1,20 @@
 package Main;
 
-import Project.Login;
+import Login.Login;
 import connection.DatabaseConnection;
 import entity.Account;
 import entity.Customer;
 import entity.Employee;
 import event.EventMenuSelected;
-import form.Form_About;
+import form.Form_AccountDatabase;
 import form.Form_Home;
+import form.Form_HomeEmp;
 import form.Form_LoanApplication;
+import form.Form_LoanDatabase;
 import form.Form_Payment;
 import form.Form_LoanVerification;
+import form.Form_TransactionDatabase;
 import form.Form_TransactionRecord;
-import form.Form_Support;
 import form.Form_UserInfo;
 import java.awt.*;
 import java.sql.PreparedStatement;
@@ -32,12 +34,6 @@ import model.TransactionType;
 
 public class Main extends javax.swing.JFrame {
 
-    // Declaration
-    public Form_Home home;
-    public Form_LoanApplication loanApp;
-    public Form_Payment payment;
-    public Form_TransactionRecord trans;
-    public Form_LoanVerification verify;
     public Login login;
     public Account user;
     public Customer customer;
@@ -57,10 +53,6 @@ public class Main extends javax.swing.JFrame {
         setBackground(new Color(0, 0, 0, 0));
     }
 
-    public void switchToSupportForm() {
-        setForm(new Form_Support());
-    }
-
     public void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
@@ -70,16 +62,11 @@ public class Main extends javax.swing.JFrame {
 
     public void setDashboard() throws SQLException, ClassNotFoundException {
         if(user.getRole()==AccountType.CUSTOMER){
-            home = new Form_Home(this);
-            loanApp = new Form_LoanApplication(this);
-            payment = new Form_Payment(this);
-            trans = new Form_TransactionRecord(this);
             menu.initCustomer();
-            setForm(home);
-            setHome();
+            setForm(new Form_Home(this));
         } else {
-            verify = new Form_LoanVerification(this);
             menu.initEmployee();
+            setForm(new Form_HomeEmp());
         }
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
@@ -88,41 +75,41 @@ public class Main extends javax.swing.JFrame {
                 try {
                     if(user.getRole() == AccountType.CUSTOMER){
                         if (index == 0) {
-                            setForm(home);
-                            setHome();
                             setAccountData();
+                            setForm(new Form_Home(Main.this));                
                         } else if (index == 1) {
+                            setAccountData();
                             setForm(new Form_UserInfo(Main.this));
-                            setAccountData();
                         } else if (index == 5) {
-                            setForm(loanApp);
+                            setForm(new Form_LoanApplication(Main.this));
                         } else if (index == 6) {
-                            setForm(payment);
                             setAccountData();
+                            setForm(new Form_Payment(Main.this));       
                         } else if (index == 7) {
-                            setForm(trans);
-                            setTransactionRecord();
+                            setForm(new Form_TransactionRecord(Main.this));
                         } else if (index == 11) {
-                            setForm(new Form_About());
-                        } else if (index == 12) {
-                            //logout
+                            setVisible(false);
+                            login = new Login(Main.this);
+                            login.setVisible(true);
                         }
                     } else {
                         if (index == 0) {
-                            //home
+                            setForm(new Form_HomeEmp());
                         } else if (index == 1){
-                            setForm(new Form_UserInfo(Main.this));
                             setAccountData();
+                            setForm(new Form_UserInfo(Main.this));
                         } else if (index == 5){
-                            setForm(verify);
+                            setForm(new Form_LoanVerification(Main.this));
                         } else if (index == 6){
-                            //loan data
+                            setForm(new Form_LoanDatabase());
                         } else if (index == 10){
-                            //acc detail
+                            setForm(new Form_AccountDatabase());
                         } else if (index == 11){
-                            //trans data
+                            setForm(new Form_TransactionDatabase());
                         } else if (index == 15){
-                            //logout
+                            setVisible(false);
+                            login = new Login(Main.this);
+                            login.setVisible(true);
                         }
                     }
                 } catch (ClassNotFoundException | SQLException e) {
@@ -185,7 +172,6 @@ public class Main extends javax.swing.JFrame {
     
     public void insertTransactionData(int id, double amount, String date, TransactionType type, int targetID) throws SQLException, ClassNotFoundException{
         PreparedStatement p;
-        ResultSet r;
         if(type == TransactionType.DEPOSIT){
             p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, deposit, date, transType, customerID)values(?,?,?,?,?)");
             p.setInt(1, id);
@@ -259,59 +245,41 @@ public class Main extends javax.swing.JFrame {
         return 1;
     }
 
-    public void setTransactionRecord() throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT recordID, loanID, transactionID, recordType FROM record WHERE customerID = ? ORDER BY recordID");
-        p.setInt(1, customer.getCustomerID());
-        ResultSet r = p.executeQuery();
-        trans.removeAllRow();
-        while (r.next()) {
-            RecordType type = RecordType.valueOf(r.getString("recordType"));
-            if(type == RecordType.LOAN){
-                PreparedStatement p1 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, loanAmount, loanDate, loanStatus FROM loan WHERE loanID = ?");
-                p1.setInt(1, r.getInt("loanID"));
-                ResultSet r1 = p1.executeQuery();
-                r1.next();
-                trans.addRecord(r1.getString("loanType"), r1.getInt("loanAmount"), r1.getString("loanDate"), r1.getString("loanStatus"), TransactionType.LOAN);
-            }
-            if (type == RecordType.TRANSACTION){
-                PreparedStatement p2 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, deposit, withdrawal, payLoan, transType, date FROM transaction WHERE transactionID = ?");
-                p2.setInt(1, r.getInt("transactionID"));
-                ResultSet r2 = p2.executeQuery();
-                r2.next();
-                if(r2.getString("transType").equals(TransactionType.PAY.toString())){
-                    PreparedStatement p3 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, payRequire FROM loan WHERE loanID = ?");
-                    p3.setInt(1, r2.getInt("loanID")); 
-                    ResultSet r3 = p3.executeQuery();
-                    r3.next();
-                    trans.addRecord("PAY BACK "+r3.getString("loanType"), r3.getInt("payRequire"), r2.getString("date"),"Loan ID "+r2.getInt("loanID")+" | Paid: "+ r2.getInt("payLoan"), TransactionType.PAY);
-                }
-                if(r2.getString("transType").equals(TransactionType.DEPOSIT.toString())){
-                    trans.addRecord(r2.getString("transType"), r2.getInt("deposit"), r2.getString("date"), "SUCCESS", TransactionType.DEPOSIT);
-                }
-                if(r2.getString("transType").equals(TransactionType.WITHDRAWAL.toString())){
-                    trans.addRecord(r2.getString("transType"), r2.getInt("withdrawal"), r2.getString("date"), "SUCCESS", TransactionType.WITHDRAWAL);
-                }
-            }
-        }
-    }
-
-    public void setHome() throws SQLException, ClassNotFoundException {
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment, payRequire, amountPaid FROM loan WHERE customerID = ? AND payRequire>amountPaid ORDER BY loanDate");
-        p.setInt(1, customer.getCustomerID());
-//addStatus(int id, String type, String date, int amount, String status)
-        ResultSet r = p.executeQuery();
-        home.removeAllRow();
-        double totalMonthlyPayment = 0;
-        while (r.next()) {       
-            home.addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus"))); 
-            if((r.getDouble("payRequire")-r.getDouble("amountPaid"))<r.getDouble("monthlyPayment")){
-                totalMonthlyPayment += r.getDouble("payRequire")-r.getDouble("amountPaid");
-            } else {
-                totalMonthlyPayment += r.getDouble("monthlyPayment");
-            }
-        }
-        home.setCardData(customer.getAsset(), customer.getDebt(), user.getUserID(), totalMonthlyPayment);
-    }
+//    public void setTransactionRecord() throws SQLException, ClassNotFoundException {
+//        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT recordID, loanID, transactionID, recordType FROM record WHERE customerID = ? ORDER BY recordID DESC");
+//        p.setInt(1, customer.getCustomerID());
+//        ResultSet r = p.executeQuery();
+//        trans.removeAllRow();
+//        while (r.next()) {
+//            RecordType type = RecordType.valueOf(r.getString("recordType"));
+//            if(type == RecordType.LOAN){
+//                PreparedStatement p1 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, loanAmount, loanDate, loanStatus FROM loan WHERE loanID = ?");
+//                p1.setInt(1, r.getInt("loanID"));
+//                ResultSet r1 = p1.executeQuery();
+//                r1.next();
+//                trans.addRecord(r1.getString("loanType"), r1.getInt("loanAmount"), r1.getString("loanDate"), r1.getString("loanStatus"), TransactionType.LOAN);
+//            }
+//            if (type == RecordType.TRANSACTION){
+//                PreparedStatement p2 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, deposit, withdrawal, payLoan, transType, date FROM transaction WHERE transactionID = ?");
+//                p2.setInt(1, r.getInt("transactionID"));
+//                ResultSet r2 = p2.executeQuery();
+//                r2.next();
+//                if(r2.getString("transType").equals(TransactionType.PAY.toString())){
+//                    PreparedStatement p3 = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanType, payRequire FROM loan WHERE loanID = ?");
+//                    p3.setInt(1, r2.getInt("loanID")); 
+//                    ResultSet r3 = p3.executeQuery();
+//                    r3.next();
+//                    trans.addRecord("PAY BACK "+r3.getString("loanType"), r3.getInt("payRequire"), r2.getString("date"),"Loan ID "+r2.getInt("loanID")+" | Paid: "+ r2.getInt("payLoan"), TransactionType.PAY);
+//                }
+//                if(r2.getString("transType").equals(TransactionType.DEPOSIT.toString())){
+//                    trans.addRecord(r2.getString("transType"), r2.getInt("deposit"), r2.getString("date"), "SUCCESS", TransactionType.DEPOSIT);
+//                }
+//                if(r2.getString("transType").equals(TransactionType.WITHDRAWAL.toString())){
+//                    trans.addRecord(r2.getString("transType"), r2.getInt("withdrawal"), r2.getString("date"), "SUCCESS", TransactionType.WITHDRAWAL);
+//                }
+//            }
+//        }
+//    }
     
     public void setAccountData() throws SQLException, ClassNotFoundException {
         if(user.getRole() == AccountType.CUSTOMER){

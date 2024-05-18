@@ -11,6 +11,13 @@ import javax.swing.JScrollPane;
 import model.Model_Record;
 import swing.ScrollBar;
 import component.Record;
+import connection.DatabaseConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.RecordType;
 import model.TransactionType;
 
 /**
@@ -33,10 +40,11 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         
-//        addRecord("Personal", "$2000", "01/01/2024", "APPROVED", TransactionType.LOAN);
-//        addRecord("Auto", "$20000", "01/01/2024", "REJECTED", TransactionType.LOAN);
-//        addRecord("Deposit", "$20000", "01/01/2024", "SUCCESS", TransactionType.ASSET);
-//        addRecord("Repay", "$2000", "01/01/2024", "APPROVED", TransactionType.PAY);
+        try {
+            setTransactionRecord();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -49,6 +57,63 @@ public class Form_TransactionRecord extends javax.swing.JPanel {
         table.removeAllRows();
     }
     
+    public void setTransactionRecord() throws SQLException, ClassNotFoundException {
+        String sql = "SELECT " +
+                     "    r.recordID, r.recordType, l.loanType AS loanLoanType, l.loanAmount, l.loanDate, l.loanStatus, " +
+                     "    t.loanID AS transLoanID, t.deposit, t.withdrawal, t.payLoan, t.transType, t.date AS transDate, " +
+                     "    l2.loanType AS payLoanType, l2.payRequire " +
+                     "FROM record r " +
+                     "LEFT JOIN loan l ON r.loanID = l.loanID AND r.recordType = 'LOAN' " +
+                     "LEFT JOIN transaction t ON r.transactionID = t.transactionID AND r.recordType = 'TRANSACTION' " +
+                     "LEFT JOIN loan l2 ON t.loanID = l2.loanID AND t.transType = 'PAY' " +
+                     "WHERE r.customerID = ? " +
+                     "ORDER BY r.recordID DESC";
+
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+        p.setInt(1, main.customer.getCustomerID());
+        ResultSet r = p.executeQuery();
+        removeAllRow();
+
+        while (r.next()) {
+            RecordType type = RecordType.valueOf(r.getString("recordType"));
+            if (type == RecordType.LOAN) {
+                addRecord(
+                    r.getString("loanLoanType"),
+                    r.getInt("loanAmount"),
+                    r.getString("loanDate"),
+                    r.getString("loanStatus"),
+                    TransactionType.LOAN
+                );
+            } else if (type == RecordType.TRANSACTION) {
+                String transType = r.getString("transType");
+                if (transType.equals(TransactionType.PAY.toString())) {
+                    addRecord(
+                        "PAY BACK " + r.getString("payLoanType"),
+                        r.getInt("payRequire"),
+                        r.getString("transDate"),
+                        "Loan ID " + r.getInt("transLoanID") + " | Paid: " + r.getInt("payLoan")+"$",
+                        TransactionType.PAY
+                    );
+                } else if (transType.equals(TransactionType.DEPOSIT.toString())) {
+                    addRecord(
+                        transType,
+                        r.getInt("deposit"),
+                        r.getString("transDate"),
+                        "SUCCESS",
+                        TransactionType.DEPOSIT
+                    );
+                } else if (transType.equals(TransactionType.WITHDRAWAL.toString())) {
+                    addRecord(
+                        transType,
+                        r.getInt("withdrawal"),
+                        r.getString("transDate"),
+                        "SUCCESS",
+                        TransactionType.WITHDRAWAL
+                    );
+                }
+            }
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

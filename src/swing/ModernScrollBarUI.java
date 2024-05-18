@@ -54,7 +54,8 @@ public class ModernScrollBarUI extends BasicScrollBarUI {
         graphics2D.fillRect(x, y, width, height);
         graphics2D.dispose();
     }
-
+    
+    
     private static class InvisibleScrollBarButton extends JButton {
 
         private InvisibleScrollBarButton() {

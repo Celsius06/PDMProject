@@ -301,7 +301,9 @@ public class Form_PayMethod extends javax.swing.JPanel {
     private void textAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textAmountActionPerformed
         try {
             amount = Integer.parseInt(textAmount.getText());
-            if(type == TransactionType.DEPOSIT){
+            if(amount == 0){
+                lbAfterTrans.setText("Invalid value!");
+            } else if(type == TransactionType.DEPOSIT){
                 lbAfterTrans.setText(main.customer.getAsset()+amount+" $");
             } else {
                 if(main.customer.getAsset()>=amount){
@@ -317,7 +319,7 @@ public class Form_PayMethod extends javax.swing.JPanel {
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
         try{
-            if(lbAfterTrans.getText().equals("Invalid value!")){
+            if(lbAfterTrans.getText().equals("Invalid value!") || amount == 0){
                 lbStatus.setIcon(new ImageIcon(getClass().getResource("/Graphics/cross (1).png")));
             } else {
                 PreparedStatement p =  DatabaseConnection.getInstance().getConnection().prepareStatement("UPDATE customer SET asset = ? WHERE customerID = ?");

@@ -2,9 +2,15 @@
 package form;
 
 import Main.Main;
+import connection.DatabaseConnection;
 import entity.Account;
 import entity.Customer;
 import java.awt.Color;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,6 +36,11 @@ public class Form_Home extends javax.swing.JPanel {
         JPanel p = new JPanel();
         p.setBackground(Color.WHITE);
         spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        try {
+            setHome();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     public void addStatus(int id, String type, String date, int amount, StatusType status){
@@ -40,7 +51,27 @@ public class Form_Home extends javax.swing.JPanel {
     }
     public void setCardData(double asset, double debt, int id, double monthlyPayment){
         card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/budget.png")), "Asset", String.format("%.2f",asset)+"$", "User ID: "+id));
-        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", String.format("%.2f",debt)+"$", "Total monthly payment: "+String.format("%.2f",monthlyPayment)));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/Graphics/debt.png")), "Loan", String.format("%.2f",debt)+"$", "Total monthly payment: "+String.format("%.2f",monthlyPayment)+"$"));
+    }
+    
+    public void setHome() throws SQLException, ClassNotFoundException {
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID, loanAmount, loanStatus, loanDate, loanType, monthlyPayment, payRequire, amountPaid FROM loan WHERE customerID = ? ORDER BY loanDate");
+        p.setInt(1, customer.getCustomerID());
+//addStatus(int id, String type, String date, int amount, String status)
+        ResultSet r = p.executeQuery();
+        removeAllRow();
+        double totalMonthlyPayment = 0;
+        while (r.next()) {       
+            addStatus(r.getInt("loanID"), r.getString("loanType"), r.getString("loanDate"), r.getInt("loanAmount"), StatusType.valueOf(r.getString("loanStatus")));
+            if(r.getString("loanStatus").equals(StatusType.APPROVED.toString())){
+                if((r.getDouble("payRequire")-r.getDouble("amountPaid"))<r.getDouble("monthlyPayment")){
+                    totalMonthlyPayment += r.getDouble("payRequire")-r.getDouble("amountPaid");
+                } else {
+                    totalMonthlyPayment += r.getDouble("monthlyPayment");
+                }
+            }
+        }
+        setCardData(customer.getAsset(), customer.getDebt(), user.getUserID(), totalMonthlyPayment);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

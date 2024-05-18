@@ -21,7 +21,7 @@ public class Form_PayLoan extends javax.swing.JPanel {
     }
     
     public void setPayLoanForm() throws SQLException, ClassNotFoundException{
-        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan WHERE customerID = ? AND amountPaid < loanAmount AND loanStatus = 'APPROVED' ORDER BY loanID");
+        PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement("SELECT loanID FROM loan WHERE customerID = ? AND amountPaid < payRequire AND loanStatus = 'APPROVED' ORDER BY loanID");
         p.setInt(1, main.customer.getCustomerID());
         ResultSet r = p.executeQuery();
         while(r.next()){
@@ -263,8 +263,11 @@ public class Form_PayLoan extends javax.swing.JPanel {
 
     private void buttonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonApplyActionPerformed
         String selectedItem = (String) boxLoan.getSelectedItem();
-        int id = Integer.parseInt(selectedItem.split(" ")[1]);
-        if(lbAfterTrans.getText().equals("Invalid value!")){
+        int id = 0;
+        if(selectedItem != null){
+            id = Integer.parseInt(selectedItem.split(" ")[1]);
+        }         
+        if(lbAfterTrans.getText().equals("Invalid value!") || payAmount == 0 || id == 0){
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Graphics/cross (1).png")));
         } else {
             try {
@@ -311,8 +314,10 @@ public class Form_PayLoan extends javax.swing.JPanel {
 
     private void textPayAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPayAmountActionPerformed
         try {
-            payAmount = Integer.parseInt(textPayAmount.getText());
-            if(payAmount > main.customer.getAsset()){
+            payAmount = Double.parseDouble(textPayAmount.getText());
+            if(payAmount == 0){
+                lbAfterTrans.setText("Invalid value!");
+            } else if(payAmount > main.customer.getAsset()){
                 lbAfterTrans.setText("Invalid value!");
             } else if(payAmount > (payRequire-amountPaid)) {
                 lbAfterTrans.setText("Invalid value!");

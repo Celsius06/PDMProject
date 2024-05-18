@@ -23,6 +23,7 @@ public class Menu extends javax.swing.JPanel {
     }
 
     public void initCustomer() {
+        listMenu1.removeAllItems();
         listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
@@ -34,10 +35,10 @@ public class Menu extends javax.swing.JPanel {
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("", "Other", Model_Menu.MenuType.TITLE));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
-        listMenu1.addItem(new Model_Menu("info", "About", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("logout", "Logout", Model_Menu.MenuType.MENU));
     }
     public void initEmployee(){
+        listMenu1.removeAllItems();
         listMenu1.addItem(new Model_Menu("home", "Home", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("user info", "User Info", Model_Menu.MenuType.MENU));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
