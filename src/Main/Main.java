@@ -171,53 +171,99 @@ public class Main extends javax.swing.JFrame {
         p.executeUpdate();    
     }
     
-    public void insertTransactionData(int id, double amount, String date, TransactionType type, int targetID) throws SQLException, ClassNotFoundException{
-        PreparedStatement p;
-        if(type == TransactionType.DEPOSIT){
-            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, deposit, date, transType, customerID)values(?,?,?,?,?)");
-            p.setInt(1, id);
-            p.setDouble(2, amount);
-            p.setString(3, date);
-            p.setString(4, type.toString());
-            p.setInt(5, customer.getCustomerID());
-            p.executeUpdate();
-        } else if (type == TransactionType.WITHDRAWAL){
-            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, withdrawal, date, transType, customerID)values(?,?,?,?,?)");
-            p.setInt(1, id);
-            p.setDouble(2, amount);
-            p.setString(3, date); 
-            p.setString(4, type.toString());
-            p.setInt(5, customer.getCustomerID());
-            p.executeUpdate();
-        } else if (type == TransactionType.PAY){
-            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, payLoan, date, transType, loanID, customerID)values(?,?,?,?,?,?)");
-            p.setInt(1, id);
-            p.setDouble(2, amount);
-            p.setString(3, date);
-            p.setString(4, type.toString());
-            p.setInt(5, targetID);
-            p.setInt(6, customer.getCustomerID());
-            p.executeUpdate();
-        }        
-    }
+//    public void insertTransactionData(int id, double amount, String date, TransactionType type, int targetID) throws SQLException, ClassNotFoundException{
+//        PreparedStatement p;
+//        if(type == TransactionType.DEPOSIT){
+//            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, deposit, date, transType, customerID)values(?,?,?,?,?)");
+//            p.setInt(1, id);
+//            p.setDouble(2, amount);
+//            p.setString(3, date);
+//            p.setString(4, type.toString());
+//            p.setInt(5, customer.getCustomerID());
+//            p.executeUpdate();
+//        } else if (type == TransactionType.WITHDRAWAL){
+//            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, withdrawal, date, transType, customerID)values(?,?,?,?,?)");
+//            p.setInt(1, id);
+//            p.setDouble(2, amount);
+//            p.setString(3, date); 
+//            p.setString(4, type.toString());
+//            p.setInt(5, customer.getCustomerID());
+//            p.executeUpdate();
+//        } else if (type == TransactionType.PAY){
+//            p = DatabaseConnection.getInstance().getConnection().prepareStatement("insert into transaction(transactionID, payLoan, date, transType, loanID, customerID)values(?,?,?,?,?,?)");
+//            p.setInt(1, id);
+//            p.setDouble(2, amount);
+//            p.setString(3, date);
+//            p.setString(4, type.toString());
+//            p.setInt(5, targetID);
+//            p.setInt(6, customer.getCustomerID());
+//            p.executeUpdate();
+//        }        
+//    }
     
-    public void insertRecordData(int recordID, int targetID, RecordType type) throws SQLException, ClassNotFoundException{
-        String queryInsertRec = null;
-        if(type == RecordType.LOAN){
-            queryInsertRec = "insert into record(recordID, loanID, recordType, customerID)values(?,?,?,?)";
-        } else if(type == RecordType.TRANSACTION){
-            queryInsertRec = "insert into record(recordID, transactionID, recordType, customerID)values(?,?,?,?)";
-        }
-        if(queryInsertRec != null){
-            PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(queryInsertRec);
-            p.setInt(1, recordID);
-            p.setInt(2, targetID);
+    public void insertTransactionData(int id, double amount, String date, TransactionType type, int targetID) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO transaction (transactionID, date, transType, customerID, deposit, withdrawal, payLoan, loanID) ";
+        query += "VALUES (?, ?, ?, ?, ";
+        query += "CASE WHEN ? = 'DEPOSIT' THEN ? ELSE NULL END, ";
+        query += "CASE WHEN ? = 'WITHDRAWAL' THEN ? ELSE NULL END, ";
+        query += "CASE WHEN ? = 'PAY' THEN ? ELSE NULL END, ";
+        query += "CASE WHEN ? = 'PAY' THEN ? ELSE NULL END)";
+
+        try (PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(query)) {
+            p.setInt(1, id);
+            p.setString(2, date);
             p.setString(3, type.toString());
             p.setInt(4, customer.getCustomerID());
+
+            // Set parameters based on transaction type using CASE statements
+            p.setString(5, type.toString());
+            p.setDouble(6, (type == TransactionType.DEPOSIT) ? amount : 0); // Deposit
+            p.setString(7, type.toString());
+            p.setDouble(8, (type == TransactionType.WITHDRAWAL) ? amount : 0); // Withdrawal
+            p.setString(9, type.toString());
+            p.setDouble(10, (type == TransactionType.PAY) ? amount : 0); // PayLoan
+            p.setString(11, type.toString());
+            p.setInt(12, (type == TransactionType.PAY) ? targetID : 0); // LoanID
+
             p.executeUpdate();
         }
     }
+    
+//    public void insertRecordData(int recordID, int targetID, RecordType type) throws SQLException, ClassNotFoundException{
+//        String queryInsertRec = null;
+//        if(type == RecordType.LOAN){
+//            queryInsertRec = "insert into record(recordID, loanID, recordType, customerID)values(?,?,?,?)";
+//        } else if(type == RecordType.TRANSACTION){
+//            queryInsertRec = "insert into record(recordID, transactionID, recordType, customerID)values(?,?,?,?)";
+//        }
+//        if(queryInsertRec != null){
+//            PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(queryInsertRec);
+//            p.setInt(1, recordID);
+//            p.setInt(2, targetID);
+//            p.setString(3, type.toString());
+//            p.setInt(4, customer.getCustomerID());
+//            p.executeUpdate();
+//        }
+//    }
 
+    public void insertRecordData(int recordID, int targetID, RecordType type) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO record (recordID, loanID, transactionID, recordType, customerID) ";
+        query += "VALUES (?, ";
+        query += "CASE WHEN ? = 'LOAN' THEN ? ELSE NULL END, ";
+        query += "CASE WHEN ? = 'TRANSACTION' THEN ? ELSE NULL END, ?, ?)";
+
+        try (PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(query)) {
+            p.setInt(1, recordID);
+            p.setString(2, type.toString());
+            p.setInt(3, (type == RecordType.LOAN) ? targetID : 0); // loanID
+            p.setString(4, type.toString());
+            p.setInt(5, (type == RecordType.TRANSACTION) ? targetID : 0); // transactionID
+            p.setString(6, type.toString());
+            p.setInt(7, customer.getCustomerID());
+            
+            p.executeUpdate();
+        }
+    }
     
     public int generateID(GenerateIDType type) throws SQLException, ClassNotFoundException {
         String queryGenerate = null;

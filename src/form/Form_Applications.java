@@ -6,7 +6,6 @@ package form;
 
 import Main.Main;
 import connection.DatabaseConnection;
-import entity.Loan;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -29,7 +28,6 @@ public class Form_Applications extends javax.swing.JPanel {
     private double interestRate;
     private double monthlyPayment;
     private double payRequire;
-    private Loan loan;
     public Form_Applications(Main main, LoanType type) {
         initConnection();
         this.main = main;
